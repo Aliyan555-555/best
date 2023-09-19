@@ -6,7 +6,7 @@ import RecentSongs from '../Components/RecentSongs'
 import { GlobalContext } from '../Context/SongContext'
 import AllSongs from '../Components/AllSongs'
 const Home = () => {
-  const history = useNavigate();
+  const history = useNavigate()
   const Post=async()=>{
     try {
       const res=await fetch('/home',{
