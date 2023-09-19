@@ -1,0 +1,48 @@
+{
+  "Songs": [
+    {
+      "_id": "64e31d1f19391fa1d235340b",
+      "title": " Badtameez Dil",
+      "relise_date": "2013",
+      "artist": "Pritam, Benny Dayal, Shefali Alvares",
+      "duration": "4:13",
+      "company": "Cock studio",
+      "image_url": "./img/Covre/Badtameez_cover.jpg",
+      "song_url": "../song/Badtameez.mp3",
+      "type": "song"
+    },
+    {
+      "_id": "64e31db719391fa1d235340c" ,
+      "title": "Astronaut In The Ocean",
+      "relise_date": "2021",
+      "artist": "Masked Wolf",
+      "duration": "2:12",
+      "company": "Cock studio",
+      "image_url": "./img/Covre/astronot_cover.jpg",
+      "song_url": "../song/Astronaut.mp3",
+      " type": "song"
+    },
+    {
+      "_id":  "64e31dda19391fa1d235340e" ,
+      "title": "Despacito",
+      "relise_date": "2021",
+      "artist": "Luis Fonsi, Daddy Yankee",
+      "duration": "4:44",
+      "company": "Cock studio",
+      "image_url": "./img/Covre/Despacito_cover.jpg",
+      "song_url": "../song/Despacito.mp3",
+      "type": "song"
+    },
+    {
+      "_id": "64e31e3f19391fa1d235340f" ,
+      "title": "Pasoori",
+      "relise_date": "2021",
+      "artist": "Shae Gill, Ali Sethi",
+      "duration": "3:44",
+      "company": "Cock studio",
+      "image_url": "./img/Covre/Pasoori_cover.jpg",
+      "song_url": "../song/Pasoori.mp3",
+      "type": "song"
+    }
+  ]
+}
