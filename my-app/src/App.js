@@ -14,6 +14,7 @@ import Logout from "./Routes/Logout";
 import { createContext, useReducer } from "react";
 export const ToogleNav=createContext()
 
+
 function App() {
   const initalstate=false
   const Reducer=(state,action)=>{
@@ -48,6 +49,7 @@ function App() {
   }; 
   
   return (
+    
     <ToogleNav.Provider value={{Toogle,dispatch}}>
     <ThemeProvider theme={theme}>
       <GlobalStyle />
@@ -65,7 +67,7 @@ function App() {
       </BrowserRouter>
     </ThemeProvider>
  </ToogleNav.Provider>
- 
+
   );
 }
 

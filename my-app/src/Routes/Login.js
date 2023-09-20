@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import  {ToogleNav}from "../App"
 import { useContext } from "react";
+import { GrStatusWarning } from 'react-icons/gr';
 
 const Login = () => {
   const history = useNavigate();
@@ -29,6 +30,7 @@ const Login = () => {
     if (res.status===400||!data||!email||!password){
       setwarn('Please fill all the fields correctly')
       setwtrue(true)
+      
     }else{
       setwarn('Login seccsesfully')
       setwtrue(false)
@@ -43,13 +45,22 @@ const Login = () => {
 
   const secc = "rgba(0, 255, 40, 0.64)";
   const warning = "rgba(255, 242, 0, 1)";
+  const red = "rgba(255, 0, 0)";
+  const none =" rgba(255, 0, 0, 0)";
 
   const style = {
     background: `${wtrue ? warning : secc}`,
+  }
+
+
+  const style1 = {
+    
+    border:`.2rem solid ${wtrue ? red : none}`,
   };
   const Wran = () => {
     return (
       <div className="warn" id="warn" style={style}>
+        <GrStatusWarning id="Warnning" />
         <p>{warn}</p>
       </div>
     );
@@ -64,11 +75,11 @@ const Login = () => {
           <form method="POST">
             <div>
               <label>Email</label>
-              <input type="email" name="email" value={email} onChange={(e)=>setemail(e.target.value)} placeholder="Enter your email" autoComplete="off" />
+              <input id="I" className="place" style={style1} type="email" name="email" value={email} onChange={(e)=>setemail(e.target.value)} placeholder="Enter your email" autoComplete="off" />
             </div>
             <div>
               <label>Password</label>
-              <input type="password" name="password" value={password} onChange={(e)=>
+              <input  className="place" style={style1} type="password" name="password" value={password} onChange={(e)=>
               setpassword(e.target.value)} placeholder="Enter your password" autoComplete="off" />
             </div>
 
@@ -97,17 +108,21 @@ const Wrapper = styled.section`
   height: 90.5vh;
   background: white;
   .warn {
-    z-index: 10000000;
-    top: 1rem;
+    z-index: 1000000000000000000;
+    
     position: absolute;
-
+    top: 8rem;
     display: flex;
-    border-radius: 1rem;
+    border-radius: .5rem;
     padding: 1.3rem;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
-    width: 50%;
+    width: 35vw;
+    #Warnning{
+      margin: 0 8rem  0 3rem;
+      font-size: 2rem;
+    }
     p {
       padding: 0;
       margin: 0;
@@ -144,6 +159,7 @@ const Wrapper = styled.section`
       transparent;
   }
 
+
   .contaner {
     margin-top: 100px;
     display: flex;
@@ -178,6 +194,12 @@ const Wrapper = styled.section`
         font-weight: 400;
         padding: 1rem 0;
       }
+      #submit{
+        &:hover{
+          transform: scale(.9);
+          background: ${({ theme }) => theme.colors.hover};
+        }
+      }
       input {
         border: 0;
         border-radius: .7rem;
@@ -187,9 +209,18 @@ const Wrapper = styled.section`
       }
     }
   }
-
+  @media only screen and (max-width: ${({ theme }) => theme.media.tab1}) {
+    .warn{
+      #Warnning{
+       margin: 0 3rem 0 2rem;
+     }
+    }}
   
 @media only screen and (max-width: ${({ theme }) => theme.media.tab2}) {
+ .warn{
+  top: 12rem;
+  width: 45vw;
+ }
   .contaner {
       width: 45%;
     div{
@@ -198,7 +229,11 @@ const Wrapper = styled.section`
     }
 
 }
+
 @media only screen and (max-width: ${({ theme }) => theme.media.mobile}) {
+  .warn{
+    width: 52vw;
+   }
   .contaner {
     border-radius: 2rem;
       width: 55%;
@@ -210,6 +245,9 @@ const Wrapper = styled.section`
 
 }
 @media only screen and (max-width:600px) {
+  .warn{
+    width: 60vw;
+   }
   .contaner {
       width: 65%;
     div{
@@ -217,6 +255,10 @@ const Wrapper = styled.section`
     }}
 }
 @media only screen and (max-width:500px) {
+  .warn{
+    top: 15rem;
+    width: 76vw;
+   }
   .contaner {
       width: 70%;
     
@@ -228,6 +270,13 @@ const Wrapper = styled.section`
     }}
 }
 @media only screen and (max-width:400px) {
+  .warn{
+    p{font-size:1.2rem;}
+    width: 83vw;
+    #Warnning{
+      margin: 0 2rem 0 1rem;
+    }
+   }
   .contaner {
       width: 80%;
        h2 {
@@ -241,6 +290,12 @@ const Wrapper = styled.section`
     }
 }
 @media only screen and (max-width:300px) {
+  .warn{
+    width: 90vw;
+    #Warnning{
+      margin: 0 1rem 0 1rem;
+    }
+   }
   .contaner {
       width: 90%;
       h2 {

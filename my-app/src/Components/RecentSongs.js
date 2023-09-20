@@ -1,4 +1,5 @@
-import React, { useState }  from 'react'
+import React from 'react'
+import   { useState }  from 'react'
 import { styled } from 'styled-components'
 import { GlobalContext } from '../Context/SongContext'
 import MusicItem from './MusicItem'
@@ -12,36 +13,86 @@ const {RecentlyPlayed}=GlobalContext();
   const LastElem3=RecentlyPlayed.RecentlyPlay[RecentlyPlayed.RecentlyPlay.length - 3]
   const LastElem4=RecentlyPlayed.RecentlyPlay[RecentlyPlayed.RecentlyPlay.length - 4]
 
-    console.log(LastElem1)
-    console.log(LastElem2)
-    console.log(LastElem3)
 
- const [LastRecentSongs,setLastRecentSong]=useState([])
+ const [LastRecentSongs,setLastRecentSong]=useState([LastElem1,LastElem2,LastElem3,LastElem4])
 const [Load,setLoad]=useState(true)
 setTimeout(() => {
   setLoad(false)
 }, 5000);
 
+const Recent2=()=>{
+  return (
+    <><MusicItem  data={LastElem1}/>
+    <MusicItem  data={LastElem2}/></>
+  )
+}
 const Main=()=>{
-  try {
+ 
+try {
   
-   if (LastElem1||LastElem2||LastElem3||LastElem4) {
-       setLastRecentSong([LastElem3,LastElem2,LastElem4,LastElem1])
+
+   if (LastElem1,LastElem2===undefined) {
+      
        return (
          <>
          <h2>{tranding_h2}</h2>
          <div className="song_slider">
            <ul className='song-ul'>
-      {Load?<Loading/>:LastRecentSongs.map((data,i)=>{
-       // console.log(data)
-         return <li  id='li' key={i} className='slider-work'> <MusicItem  data={data}/></li>
-     })}</ul></div> </>)
+      {Load?<Loading/>: <li><MusicItem  data={LastElem1}/></li>
+     }</ul></div> </>)
    }
-
-
-} catch (error) {
-    console.log("Recent-catch")
+   if (LastElem1,LastElem2,LastElem3===undefined) {
+       
+       return (
+         <>
+         <h2>{tranding_h2}</h2>
+         <div className="song_slider">
+           <ul className='song-ul'>
+      {Load?<Loading/>: <>
+      <li><MusicItem  data={LastElem1}/></li>
+      <li><MusicItem  data={LastElem2}/></li>
+    
+      
+      </>
+     }</ul></div> </>)
+   }
+   if (LastElem1,LastElem2,LastElem3,LastElem4===undefined) {
+      
+       return (
+         <>
+         <h2>{tranding_h2}</h2>
+         <div className="song_slider">
+           <ul className='song-ul'>
+      {Load?<Loading/>: <>
+      <li><MusicItem  data={LastElem1}/></li>
+      <li><MusicItem  data={LastElem2}/></li>
+      <li><MusicItem  data={LastElem3}/></li>
+      
+      
+      </>
+     }</ul></div> </>)
+   }
+   if (LastElem1,LastElem2,LastElem3,LastElem4) {
+      
+       return (
+         <>
+         <h2>{tranding_h2}</h2>
+         <div className="song_slider">
+           <ul className='song-ul'>
+      {Load?<Loading/>: <>
+     <li><MusicItem  data={LastElem1}/></li> 
+     <li><MusicItem  data={LastElem2}/></li> 
+     <li><MusicItem  data={LastElem3}/></li> 
+     <li><MusicItem  data={LastElem4}/></li> 
+      
+      
+      </>
+     }</ul></div> </>)
+   }
+  } catch (error) {
+  console.log(error)
   }
+ 
 }
 
   return (
@@ -52,7 +103,8 @@ const Main=()=>{
   )
 }
 const TrandeStyle=styled.section`
-width: auto;
+width: 100%;
+
 position: relative;
 h2{
   color: ${({theme})=>theme.colors.bg};
@@ -67,16 +119,16 @@ h2{
   
   margin: 5rem auto;
  
-  width: 90%;
+  width: 65%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap:wrap;
   height: 100%;
   
-  #li{
-    margin:1rem .6rem
+  li{
+    margin:1rem .6rem;
   }
   }
  

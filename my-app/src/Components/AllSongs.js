@@ -31,6 +31,7 @@ const AllSongs = ({Heading}) => {
 }
 const Wrapper=styled.section`
 width: auto;
+
 position: relative;
 h2{
   color: ${({theme})=>theme.colors.bg};

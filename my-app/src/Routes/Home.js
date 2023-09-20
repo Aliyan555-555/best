@@ -1,11 +1,12 @@
 
 import Hero from '../Components/Hero'
-import  {useEffect} from 'react'
+import  {useEffect,useRef} from 'react'
 import { useNavigate } from 'react-router-dom'
 import RecentSongs from '../Components/RecentSongs'
-import { GlobalContext } from '../Context/SongContext'
+
 import AllSongs from '../Components/AllSongs'
 const Home = () => {
+  const containerRef = useRef(null)
   const history = useNavigate()
   const Post=async()=>{
     try {
@@ -29,13 +30,15 @@ const Home = () => {
    Post();
   }, []);
   return (
- <form method='GET'>
+  
+ <form method='GET'   ref={containerRef}>
  
-      <Hero Hero_h1_start="Listening " h1_span="Your"  Hero_h1_end=" Favorite MUSIC" Hero_para="Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus cupiditate dolores placeat eum eius, recusandae."/>
-      <RecentSongs tranding_h2="Recently Played"/> */
-       <AllSongs Heading="Most Popular"/>
+      <Hero  Hero_h1_start="Listening " h1_span="Your"  Hero_h1_end=" Favorite MUSIC" Hero_para="Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus cupiditate dolores placeat eum eius, recusandae."/>
+      <RecentSongs  tranding_h2="Recently Played"/> */
+       <AllSongs   Heading="Most Popular"/>
     
 </form>
+
   )
 }
 
