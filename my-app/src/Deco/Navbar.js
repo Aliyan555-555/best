@@ -76,11 +76,13 @@ const NavbarStyle = styled.ul`
   align-items: center;
   justify-content: center;
   gap: 3rem;
+  z-index:100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
  
 
   li {
    
     a {
+      text-wrap:nowrap;
       font-size:1.6rem;
       font-weight:500;
       padding: 0.6rem  1.5rem;
@@ -119,6 +121,9 @@ const NavbarStyle = styled.ul`
       }
     }
     
+}
+@media only screen and (max-width:290px) {
+width: 45%;
 }
 }
 `;

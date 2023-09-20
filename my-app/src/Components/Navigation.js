@@ -41,7 +41,7 @@ top:0;
 left:0;
 width: 100%;
 padding: 0 4.8rem;
-z-index:100000000000000000000;
+z-index:10000000000000000000000000000000000000000000000000000;
 display: flex;
 align-items:center;
 justify-content:space-between; 

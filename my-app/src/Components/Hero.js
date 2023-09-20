@@ -5,7 +5,7 @@ import hero_bg  from  "../../src/img/hero_bg.webp"
 
 const Hero = ({Hero_h1_start,h1_span,Hero_h1_end,Hero_para}) => {
 
-  return (
+  return (<>
     <HeroStyle  className='Hero-responsive'>
       <div className="Hero-text-data">
         <h1>{Hero_h1_start}<span>{h1_span}</span>{Hero_h1_end}</h1>
@@ -14,18 +14,21 @@ const Hero = ({Hero_h1_start,h1_span,Hero_h1_end,Hero_para}) => {
       <div className="Hero-image-data">
         <img src={hero_bg} alt="" />
       </div>
+     
     </HeroStyle>
+ <hr/></>
   )
 }
 const HeroStyle=styled.section`
 padding-top:50px; 
 display: flex;
 align-items: center;
-
 width: 70%;
 margin:0 auto;
-height: 75vh;
-
+height: 100vh;
+hr{
+  padding: 2px;
+}
 .Hero-text-data{
  
   display: flex;

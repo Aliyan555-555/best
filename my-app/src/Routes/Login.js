@@ -108,7 +108,7 @@ const Wrapper = styled.section`
   height: 90.5vh;
   background: white;
   .warn {
-    z-index: 1000000000000000000;
+    z-index: 1;
     
     position: absolute;
     top: 8rem;

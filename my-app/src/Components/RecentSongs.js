@@ -99,11 +99,13 @@ try {
    
     <TrandeStyle>
     <Main/>
+    <hr/>
     </TrandeStyle>
   )
 }
 const TrandeStyle=styled.section`
 width: 100%;
+padding-top:5rem;
 
 position: relative;
 h2{
