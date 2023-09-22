@@ -81,37 +81,9 @@ a{
 li{
       list-style: none
 }
-@media only screen and (max-width: ${({ theme }) => theme.media.mobile}) {
-
-     
-      .Hero-responsive{
-            width: 100%
- margin: 0;           
-      flex-direction: column;
-      .Hero-text-data{  
-            text-align: center;
-            
-            h1{
-                
-                  font-size:8rem;
-                  line-height: 15rem;
-                  margin-bottom: 1rem;
-            }
-            p{
-                  font-size:2.5rem;
-                  line-height:2.9rem; 
-            }
-      }
-      
-      }
-
-            
-      
-}
 
 @media only screen and (max-width: ${({ theme }) => theme.media.tab2}) {
      .Hero-responsive{
-     
       text-align: center;
       height: 90vh;
       width: 100%;
@@ -132,11 +104,6 @@ li{
                   font-size:2rem;
                   line-height: 2.5rem;
             }
-          
-
-            
-          
-
       }
       .Hero-image-data{
             padding: 0;

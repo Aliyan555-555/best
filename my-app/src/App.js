@@ -12,18 +12,19 @@ import { GlobalStyle } from "./GlobleStyle";
 import { SongProvider } from './Context/SongContext';
 import Logout from "./Routes/Logout";
 import { createContext, useReducer } from "react";
+import { RiNurseLine } from "react-icons/ri";
 export const ToogleNav=createContext()
 
 
 function App() {
-  const initalstate=false
+  const initalstate=null
   const Reducer=(state,action)=>{
     if (action.type==="USER"){
       return action.payload;
     }
   }
   const [Toogle,dispatch]=useReducer(Reducer,initalstate)
-
+console.log(Toogle)
 
   const theme = {
     colors: {

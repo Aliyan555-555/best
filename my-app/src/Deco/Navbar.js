@@ -5,8 +5,9 @@ import { styled } from "styled-components";
 import "./index.css";
 import { useContext } from "react";
 import  {ToogleNav}from "../App"
+
 const Navbar = () => {
-  const {Toogle}=useContext(ToogleNav);
+  const {Toogle,dispatch}=useContext(ToogleNav);
   const [res, setres] = useState(true);
   const Responsive = () => {
     if (res) {
