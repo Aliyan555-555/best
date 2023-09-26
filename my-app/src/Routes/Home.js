@@ -1,11 +1,14 @@
 
 import Hero from '../Components/Hero'
-import  {useEffect,useRef} from 'react'
+import  {useContext, useEffect,useRef} from 'react'
 import { useNavigate } from 'react-router-dom'
 import RecentSongs from '../Components/RecentSongs'
+import Library from '../Components/Library'
 
 import AllSongs from '../Components/AllSongs'
+import { ToogleNav } from '../App'
 const Home = () => {
+  const {Toogle,setToogle}=useContext(ToogleNav)
   const containerRef = useRef(null)
   const history = useNavigate()
   const Post=async()=>{
@@ -21,10 +24,17 @@ const Home = () => {
       const data=await res.json()
       if (!res.status===200){
        console.log("user-not")
+       
+      }else{
+        setToogle(true)
+       
       }
+      
     } catch (error) {
+      setToogle(false)
         history('/Login')
     }
+    
   }
   useEffect(() => {
    Post();
@@ -34,8 +44,7 @@ const Home = () => {
  <form method='GET'   ref={containerRef}>
  
       <Hero  Hero_h1_start="Listening " h1_span="Your"  Hero_h1_end=" Favorite MUSIC" Hero_para="Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus cupiditate dolores placeat eum eius, recusandae."/>
-      <RecentSongs  tranding_h2="Recently Played"/> */
-       <AllSongs   Heading="Most Popular"/>
+      <Library/>
     
 </form>
 

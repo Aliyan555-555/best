@@ -2,13 +2,16 @@ import React from "react";
 import { useRef, useEffect } from "react";
 import styled from "styled-components";
 
+
 const Canvas = () => {
+
     useEffect(() => {
        
 
   const c = document.querySelector("canvas");
   const ctx = c.getContext("2d");
-  var color = 0;
+ var color = 0;
+
   c.width=window.innerWidth;
   c.height=window.innerHeight
 
@@ -22,14 +25,14 @@ const Canvas = () => {
   c.addEventListener("mousemove", function (event) {
     m.x = event.x;
     m.y = event.y;
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 5; i++) {
       parry.push(new Partical());
     }
   });
   c.addEventListener("click", function (event) {
     m.x = event.x;
     m.y = event.y;
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 150; i++) {
       parry.push(new Partical());
     }
   });
@@ -44,8 +47,8 @@ const Canvas = () => {
       this.x = m.x;
       this.y = m.y;
       this.size = Math.random() * 4 + 1;
-      this.speedX = Math.random() * 5 - 1.5;
-      this.speedY = Math.random() * 5 - 1.5;
+      this.speedX = Math.random() * 3 - 1.5;
+      this.speedY = Math.random() * 3 - 1.5;
     }
     update() {
       this.x += this.speedX;
@@ -53,6 +56,8 @@ const Canvas = () => {
     }
     draw() {
       ctx.fillStyle = "hsl(" + color + ",100%,50%)";
+    
+      
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
       ctx.fill();
@@ -72,7 +77,7 @@ const Canvas = () => {
   }
   function animation() {
     // ctx.clearRect(0,0,c.with,c.height)
-    ctx.fillStyle = 'rgb(1, 13, 49,0.2)';
+    ctx.fillStyle = 'rgb(1, 13, 49,0.1)';
     ctx.fillRect(0, 0, c.width, c.height);
     requestAnimationFrame(animation);
     hendle();
@@ -83,7 +88,8 @@ const Canvas = () => {
 }, []);
   return (
     <Wrapper>
-      <canvas id="canvas" />
+      <canvas id="canvas" className="fireworks"/>
+  
     </Wrapper>
   );
 };
@@ -96,7 +102,7 @@ const Wrapper = styled.div`
     position: absolute;
     width: 100vw;
     height: 100vh;
-    background: blue;
+   
   }
 `;
 export default Canvas;

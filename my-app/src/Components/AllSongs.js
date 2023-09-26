@@ -4,6 +4,11 @@ import { GlobalContext } from '../Context/SongContext'
 import Loading from '../Deco/Loader'
 import {styled} from 'styled-components'
 import MusicItem from './MusicItem'
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+
 
 const AllSongs = ({Heading}) => {
     const {state} = GlobalContext()
@@ -15,12 +20,19 @@ const AllSongs = ({Heading}) => {
     <Wrapper>
     <h2>{Heading}</h2>
     <div className="song_slider">
-      <ul className='song-ul'>
-  {Load?<Loading/>:state.Songs.map((data,i)=>{
-          return <li  id='li' key={i}  className='slider-work'> <MusicItem  data={data}/></li>
+      <ul >
+      <Swiper
+      className='song-ul'
+      spaceBetween={20}
+      slidesPerView={4}
+      onSlideChange={() => console.log('slide change')}
+      onSwiper={(swiper) => console.log(swiper)}
+    >
+   {Load?<Loading/>:state.Songs.map((data,i)=>{
+          return <SwiperSlide><li  id='li' key={i}  className='slider-work'> <MusicItem  data={data}/></li> </SwiperSlide> 
 })
 } 
-    
+  </Swiper>
     
     </ul>
     </div>
@@ -31,26 +43,28 @@ const AllSongs = ({Heading}) => {
 }
 const Wrapper=styled.section`
 width: auto;
-padding-top:5rem;
+
+padding: 4rem;
 position: relative;
 h2{
-  color: ${({theme})=>theme.colors.bg};
+  padding: 2rem;
+  color: ${({theme})=>theme.colors.text};
   text-align: left;
   font-size: 3.5rem;
   font-weight: 600;
-  margin: 0rem 9rem;
+
 }
 
 
 .song-ul{
   
-  margin: 5rem auto;
+  margin: 2rem auto;
  
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap:wrap;
   height: 100%;
   

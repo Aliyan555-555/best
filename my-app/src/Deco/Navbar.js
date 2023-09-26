@@ -20,6 +20,7 @@ const Navbar = () => {
   };
 
   const RenderMenu = () => {
+
     if (Toogle){
       return (
         <>
@@ -37,7 +38,7 @@ const Navbar = () => {
       </>
        
       );
-    } else {
+    } if(!Toogle) {
       return(
         <>
           <li>

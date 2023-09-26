@@ -3,35 +3,92 @@ import  { useRef,useEffect } from 'react';
 import { styled } from 'styled-components'
 import hero_bg  from  "../../src/img/hero_bg.webp"
 import Canvas from './Canvas';
+import '../Deco/index.css'
+import { Link, animateScroll as scroll } from "react-scroll";
 
-
+  const scrollToTop = () => {
+  scroll.scrollTo(560); 
+};
 const Hero = ({Hero_h1_start,h1_span,Hero_h1_end,Hero_para}) => {
- 
-
-
-
-
-  return (<>
+const ScrollTo=()=>{
+  window.scrollTo(0,700)
+}
+  return (<Div>
     <HeroStyle  className='Hero-responsive'>
       <Canvas/>
       <div className="Hero-text-data">
-        <h1>{Hero_h1_start}<span>{h1_span}</span>{Hero_h1_end}</h1>
+        <h1 id='hero-heading'>{Hero_h1_start}<span>{h1_span}</span>{Hero_h1_end}</h1>
        
         
       </div>
       
-     
-    </HeroStyle>
- <hr/></>
+    
+    </HeroStyle> 
+    <ToogleSection>
+      <Link
+       activeClass="active"
+       to="#Recent"
+       spy={true}
+       smooth={true}
+       offset={-70}
+       duration={200}
+       onClick={scrollToTop}
+       >
+       </Link>
+     </ToogleSection>
+</Div>
   )
 }
+const Div=styled.div`
+position: relative;
+`
+const ToogleSection=styled.div`
+width: 100%;
+height:6rem;
+position: relative;
+bottom: 3rem;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+a{
+  border:3px solid white;
+  border-radius: 2rem;
+  position: absolute;
+  padding: 2.8rem 1.3rem;
+  display: flex;
+  
+  justify-content: center;
+  &::before{
+    top: .8rem;
+    border-radius: 5px; 
+    content: '';
+    position: absolute;
+    background: white;
+    width: 1rem;
+    animation-name: move;
+    animation-iteration-count: infinite;
+    animation-duration: 7s;
+    height: 1rem;
+  }
+ 
+  
+}
+
+
+`
 const HeroStyle=styled.section`
 padding-top:50px; 
 display: flex;
+
 align-items: center;
 width: 100%;
-
-height: 100vh;
+@font-face {
+  font-family:'Nexa Rust Slab Black Shadow 01 ';
+  src: url(./font/NexaRustSlab-BlackShadow01.otf);
+}
+height: 92vh;
 background: ${({theme})=>theme.colors.bg};
 
 

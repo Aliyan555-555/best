@@ -12,7 +12,7 @@ font-family: 'Work Sans', sans-serif;
 }
 /* width */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
  
 }
 ::selection {
@@ -21,7 +21,7 @@ font-family: 'Work Sans', sans-serif;
     }
 /* Track */
 ::-webkit-scrollbar-track {
-  background: transparent; 
+  background: ${({theme})=>theme.colors.bg}; 
 }
  
 /* Handle */
@@ -32,7 +32,7 @@ font-family: 'Work Sans', sans-serif;
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.13); 
+  background: #ff0062; 
 }
 html{
       width: 100vw;

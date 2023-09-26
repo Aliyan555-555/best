@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToogleNav } from '../App';
 import { useContext } from 'react';
 const Logout = () => {
-    const {dispatch} = useContext(ToogleNav);
+    const {Toogle,setToogle} = useContext(ToogleNav);
     const navigate = useNavigate();
 // eslint-disable-next-line
     useEffect(() => {
@@ -16,10 +16,8 @@ const Logout = () => {
         },
         credentials: 'include'
     }).then((res)=>{
-        dispatch({
-            type:'USER',
-            payload:false
-        })
+        setToogle(false)
+          
         // eslint-disable-next-line
       navigate('/Login')
       // eslint-disable-next-line

@@ -11,24 +11,21 @@ import Error from "./Routes/Error";
 import { GlobalStyle } from "./GlobleStyle";
 import { SongProvider } from './Context/SongContext';
 import Logout from "./Routes/Logout";
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState } from "react";
 import { RiNurseLine } from "react-icons/ri";
 export const ToogleNav=createContext()
 
 
 function App() {
-  const initalstate=null
-  const Reducer=(state,action)=>{
-    if (action.type==="USER"){
-      return action.payload;
-    }
-  }
-  const [Toogle,dispatch]=useReducer(Reducer,initalstate)
+
+  const [Toogle,setToogle]=useState(null)
 console.log(Toogle)
 
   const theme = {
     colors: {
+      play:"rgba(255, 255, 255, 0.18)",
       hover:"#001a4a",
+     bg_normal:"#002252",
       bg: "rgb(1, 13, 49)",
       bg_light:"#ebf2fa",
       heading: "rgb(1, 13, 49)",
@@ -51,9 +48,10 @@ console.log(Toogle)
   
   return (
     
-    <ToogleNav.Provider value={{Toogle,dispatch}}>
+    
     <ThemeProvider theme={theme}>
       <GlobalStyle />
+      <ToogleNav.Provider value={{Toogle,setToogle}}>
       <BrowserRouter>
         <Navigation />
         <Routes>
@@ -65,9 +63,10 @@ console.log(Toogle)
           <Route path="/Logout" element={<Logout/>} />
           <Route path="*" element={<Error/>} />
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> 
+      </ToogleNav.Provider>
     </ThemeProvider>
- </ToogleNav.Provider>
+
 
   );
 }

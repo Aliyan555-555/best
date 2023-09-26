@@ -38,6 +38,16 @@ if (data._id) {
 
 const MusicStyle=styled.div`
 width: 24rem;
+position: relative;
+
+  &:hover,
+&active{
+  transform: scale(1.1);
+  background:rgba(255, 255, 255, 0.13);
+}
+padding: 2rem;
+border-radius: 1rem;
+
 height: 27.9rem;
 .s-i-cover{
   position:relative;
@@ -64,13 +74,13 @@ height: 27.9rem;
   width: 100%;
   height: 25%;
   p{
-    color: ${({theme})=>theme.colors.para};
+    color: ${({theme})=>theme.colors.text};
     line-height: .7rem;
     font-size:1rem;
   }
   h3{
     margin: .8rem  0 0 0;
-    color: ${({theme})=>theme.colors.para};
+    color: ${({theme})=>theme.colors.text};
     line-height: 1rem;
     font-weight: 600;
   }

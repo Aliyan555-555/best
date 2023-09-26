@@ -6,14 +6,15 @@ import  {ToogleNav}from "../App"
 import { useContext } from "react";
 import { GrStatusWarning } from 'react-icons/gr';
 
+
 const Login = () => {
   const history = useNavigate();
   const [wtrue,setwtrue]=useState(false);
   const [warn,setwarn]=useState('');
   const [email,setemail]=useState('');
   const [password,setpassword]=useState('');
-  const {dispatch}=useContext(ToogleNav);
- 
+  const {Toogle,setToogle}=useContext(ToogleNav);
+
   const Post=async(e)=>{
     e.preventDefault();
    const res=await fetch('/signin',{
@@ -32,16 +33,15 @@ const Login = () => {
       setwtrue(true)
       
     }else{
+      
+      setToogle(true)
       setwarn('Login seccsesfully')
       setwtrue(false)
-      dispatch({
-        type:'USER',
-        payload:true,
-      })
       history('/')
 
     }
   }
+  console.log(Toogle)
 
   const secc = "rgba(0, 255, 40, 0.64)";
   const warning = "rgba(255, 242, 0, 1)";

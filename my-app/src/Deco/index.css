@@ -8,6 +8,20 @@
   color: honeydew;
   
 }
+
+@keyframes move {
+  0%   {top:.8rem;}
+  10%{top: 4rem;}
+  20%{top: .8rem;}
+  30%{top: 4rem;}
+  40%{top: .8rem;}
+  50%{top: 4rem;}
+  60%{top: .8rem;}
+  70%{top: 4rem;}
+  80%{top: .8rem;}
+  90%{top: 4rem;}
+  100% {top: .8rem;}
+  }
 @media only screen and (max-width:900px) {
     .menu{
         display: flex;

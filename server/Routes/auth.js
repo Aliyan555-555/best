@@ -115,10 +115,11 @@ router.post("/addsong",Authenticate,async(req,res)=>{
 router.post("/Recentlyplayed",Authenticate,async(req,res)=>{
  try {
    const {_id,title,relise_date,artist,duration,company,image_url,song_url,type}=req.body;
- 
+  
   // if(!req.Recentlyplayed.filter((element) => element._id ==_id).length>0){
     console.log('song-not-add')
    const FindUser=await User.findOne({_id:req.UserId})
+  
    if (FindUser){
      const usersong=await FindUser.Recentlyplayed(_id,title,relise_date,artist,duration,company,image_url,song_url,type)
      res.status(201).json({message:"add-song"})
