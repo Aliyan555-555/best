@@ -7,8 +7,7 @@ import '../Deco/index.css'
 import { Link, animateScroll as scroll } from "react-scroll";
 
   const scrollToTop = () => {
-  scroll.scrollTo(560); 
-};
+  scroll.scrollTo(window.innerHeight+100);};
 const Hero = ({Hero_h1_start,h1_span,Hero_h1_end,Hero_para}) => {
 const ScrollTo=()=>{
   window.scrollTo(0,700)
@@ -41,12 +40,13 @@ const ScrollTo=()=>{
 }
 const Div=styled.div`
 position: relative;
+height: 100vh;
 `
 const ToogleSection=styled.div`
 width: 100%;
 height:6rem;
-position: relative;
-bottom: 3rem;
+position: absolute;
+bottom: 1rem;
 
 display: flex;
 align-items: center;

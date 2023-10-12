@@ -15,6 +15,8 @@ const Authenticate=async (req,res,next)=>{
         req.UserId=rootuser._id
         req.Recentlyplayed=rootuser.Recentlyplay
         req.UserPlaylist=rootuser.Playlist
+        req.OrgPlaylist=rootuser.OrgPlaylist
+        req.OrgPlaylistTitle=rootuser.OrgPlaylist.map((data)=>data.title)
         next()
     } catch (error) {
         res.status(400).send('Unauthorized:no token provided')

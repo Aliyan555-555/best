@@ -36,11 +36,11 @@ const Navigation = () => {
   );
 };
 const Mainheader = styled.header`
-position: fixed;
+position:fixed;
 top:0;
 left:0;
 width: 100%;
-padding: 0 4.8rem;
+padding:0 4.8rem;
 z-index:10000000000000000000000000000000000000000000000000000;
 display: flex;
 align-items:center;
@@ -48,6 +48,7 @@ justify-content:space-between;
 color: ${({ theme }) => theme.colors.heading};
 height: 7.3rem;
 background: ${({ theme }) => theme.colors.bg} ;
+
 @media only screen and (max-width:${({theme})=>theme.media.tab2}) {
     
 
@@ -57,7 +58,7 @@ background: ${({ theme }) => theme.colors.bg} ;
 #logo{
   display: flex;
   align-items: center;
-
+  flex: 0 0 85%;
   height: 100%;
 
 }

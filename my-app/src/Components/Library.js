@@ -1,38 +1,52 @@
-import React, { useState } from "react";
+import React from "react";
+import { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
-import {
-  AiFillHome,
-  AiOutlinePlus,
-  AiOutlineHome,
-  AiOutlineArrowRight,
-} from "react-icons/ai";
+import Cookies from "js-cookie";
+import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { PiMagnifyingGlassFill } from "react-icons/pi";
 import Libraryitem from "../Deco/LibraryItem";
 import LibraryHome from "./LibraryHome";
 import LibraryLike from "./LibraryLike";
+import ToogleLibraryitem from "../Deco/ToogleLibraryitem";
+import { GlobalContext } from "../Context/SongContext";
+
 const Library = () => {
+  const { Orgplaylist, setNavProfile, NavProfile,playlist} = GlobalContext();
+  const ToogleRef = useRef();
   const [home, sethome] = useState(true);
   const [search, setsearch] = useState(false);
   const [likeplaylist, setlikeplaylist] = useState(false);
+  const [orgplay, setorgplay] = useState(false);
+  const [itemlimet, setitemlimet] = useState(4.5);
+  const [pinPlaylist, setpinPlaylist] = useState(true);
+  const [pinlike, setpinlike] = useState(true);
+  const [Profile, setProfile] = useState(false);
   const Render = () => {
-    if (home || !search) {
-      return <LibraryHome />;
+    if (home && !search && !likeplaylist && !orgplay) {
+      return <LibraryHome itemlimet={itemlimet} setitemlimet={setitemlimet} />;
     }
-    if (search || !home) {
+    if (search && !home && !likeplaylist && !orgplay) {
       return <LibraryLike />;
     }
 
-    // if (likeplaylist||!home||!search){
-    //   return<LibraryLike/>
-
-    // }
+    if (likeplaylist && !home && !search && !orgplay) {
+      return <LibraryLike like={true} />;
+    }
+    if (orgplay && !likeplaylist && !home && !search) {
+      return <LibraryLike like={false} />;
+    }
+    if (Profile && !orgplay && !likeplaylist && !home && !search) {
+      return <LibraryLike like={false} Profile={Profile} />;
+    }
   };
   const Hendleserch = () => {
     if (search) {
-      sethome(true);
-      setsearch(false);
+      setsearch(true);
     } else {
+      setNavProfile(false);
+      setProfile(false);
+      setorgplay(false);
       setlikeplaylist(false);
       sethome(false);
       setsearch(true);
@@ -40,116 +54,275 @@ const Library = () => {
   };
   const Renderhendle = () => {
     if (home) {
-      sethome(false);
+      sethome(true);
     } else {
+      setNavProfile(false);
+      sethome(true);
+      setProfile(false);
+      setorgplay(false);
       setlikeplaylist(false);
       setsearch(false);
-      sethome(true);
     }
   };
   const likeRender = () => {
-    console.log("like");
     if (likeplaylist) {
-      setlikeplaylist(false);
-      sethome(true);
+      setlikeplaylist(true);
     } else {
+      setNavProfile(false);
+      setorgplay(false);
+      setProfile(false);
       setlikeplaylist(true);
       setsearch(false);
       sethome(false);
     }
   };
-const [Toogle, setToogle] = useState(true);
-const hendleToogle=()=>{
-if (Toogle){
-  setToogle(false)
-  
-} else {
-  setToogle(true)
-  
-}
-}
-  const LeftRender=()=>{
-  if (Toogle) {
-    return  (
-    <Toogle_main>
-    <div className="Toogle-navigation">
-      <a onClick={Renderhendle}>
-        {home ? <AiFillHome /> : <AiOutlineHome />}
-      </a>
-      <a onClick={Hendleserch}>
-        {search ? <PiMagnifyingGlassFill /> : <FaMagnifyingGlass />}
-      </a>
-    </div>
-    <div className="Toogle-library">
-      <div className="Toogle-library-header">
-        <svg
-          onClick={hendleToogle}
-          role="img"
-          height="24"
-          width="24"
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-          data-encore-id="icon"
-          className="Svg-sc-ytk21e-0 haNxPq"
-        >
-          <path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z"></path>
-        </svg>
-       
-      </div>
-      <div className="Toogle-library-content">
-       
-      </div>
-    </div>
-  </Toogle_main>
+  const playlistRender = () => {
+    if (orgplay) {
+      setorgplay(true);
+    } else {
+      setNavProfile(false);
+      setProfile(false);
+      setorgplay(true);
+      setlikeplaylist(false);
+      setsearch(false);
+      sethome(false);
+    }
+  };
+  const Activeprofile = () => {
+    if (Profile) {
+      setProfile(true);
+    } else {
+      setNavProfile(true);
+      setProfile(true);
+      setorgplay(false);
+      setlikeplaylist(false);
+      setsearch(false);
+      sethome(false);
+    }
+  };
+  useEffect(() => {
+    if (NavProfile) {
+      Activeprofile();
+    }
+  });
 
+  const [Toogle, setToogle] = useState(true);
+  const hendleToogle = () => {
+    if (Toogle) {
+      setToogle(false);
+    } else {
+      setToogle(true);
+    }
+  };
+  const LeftRender = () => {
     
-  )}else{
-    return(
-    <div className="Left">
-    <div className="navigate">
-      <a onClick={Renderhendle}>
-        {home ? <AiFillHome /> : <AiOutlineHome />}
-        <p>Home</p>
-      </a>
-      <a onClick={Hendleserch}>
-        {search ? <PiMagnifyingGlassFill /> : <FaMagnifyingGlass />}
-        <p>Search</p>
-      </a>
-    </div>
-    <div className="library">
-      <div className="library-header" onClick={hendleToogle}>
-        <svg
-          
-          role="img"
-          height="24"
-          width="24"
-          aria-hidden="true"
-          viewBox="0 0 24 24"
-          data-encore-id="icon"
-          className="Svg-sc-ytk21e-0 haNxPq"
-        >
-          <path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z"></path>
-        </svg>
-        <p>Your Library</p>
-        <AiOutlinePlus />
-        <AiOutlineArrowRight />
-      </div>
-      <div className="library-content">
-        <Libraryitem onClick={likeRender} />
-        <Libraryitem />
-        <Libraryitem />
-        <Libraryitem />
-      </div>
-    </div>
-  </div>)}
-  }
-  
+    if (Toogle) {
+      
 
+      const hendle = () => {};
+
+      const r = window.innerWidth <= 650;
+      const p = r ? hendle : hendleToogle;
+      if (ToogleRef.current) {
+        ToogleRef.current.style.width = "92%";
+      }
+      setitemlimet(5.5);
+      return (
+        <Toogle_main>
+          <div className="Toogle-navigation">
+            <a onClick={Renderhendle}>
+              {home ? <AiFillHome /> : <AiOutlineHome />}
+            </a>
+            <a onClick={Hendleserch}>
+              {search ? <PiMagnifyingGlassFill /> : <FaMagnifyingGlass />}
+            </a>
+          </div>
+          <div
+            className="Toogle-library"
+            onClick={ContextClick}
+            onContextMenu={LibraryContext}
+          >
+            <PlaylistContext
+              style={{
+                top: LibraryContextY,
+                left: LibraryContextX,
+                display: LibraryContextDisplay,
+              }}
+            >
+              <li onClick={PinPlaylist}>
+                {pinPlaylist ? "Unpin Playlist" : "Pin Playlist"}
+              </li>
+              <li onClick={PinLike}>{pinlike ? "Unpin Like" : "Pin Like"}</li>
+            </PlaylistContext>
+            <div className="Toogle-library-header" onClick={p}>
+              <svg
+                role="img"
+                height="24"
+                width="24"
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                data-encore-id="icon"
+                className="Svg-sc-ytk21e-0 haNxPq"
+              >
+                <path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z"></path>
+              </svg>
+            </div>
+            <div className="Toogle-library-content">
+              {pinlike ? (
+                <ToogleLibraryitem like={true} likeRender={likeRender} />
+              ) : (
+                ""
+              )}
+              {pinPlaylist ? (
+                Orgplaylist?.length > 0 ? (
+                  <ToogleLibraryitem like={false} likeRender={playlistRender} />
+                ) : (
+                  ""
+                )
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </Toogle_main>
+      );
+    } else {
+      setitemlimet(4.5);
+      ToogleRef.current.style.width = "78%";
+      return (
+        <div className="Left">
+          <div className="navigate">
+            <a onClick={Renderhendle}>
+              {home ? <AiFillHome /> : <AiOutlineHome />}
+              <p>Home</p>
+            </a>
+            <a onClick={Hendleserch}>
+              {search ? <PiMagnifyingGlassFill /> : <FaMagnifyingGlass />}
+              <p>Search</p>
+            </a>
+          </div>
+          <div
+            className="library"
+            onContextMenu={LibraryContext}
+            onClick={ContextClick}
+          >
+            <PlaylistContext
+              style={{
+                top: LibraryContextY,
+                left: LibraryContextX,
+                display: LibraryContextDisplay,
+              }}
+            >
+              <li onClick={PinPlaylist}>
+                {pinPlaylist ? "Unpin Playlist" : "Pin Playlist"}
+              </li>
+              <li onClick={PinLike}>{pinlike ? "Unpin Like" : "Pin Like"}</li>
+            </PlaylistContext>
+            <div className="library-header" onClick={hendleToogle}>
+              <svg
+                role="img"
+                height="24"
+                width="24"
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                data-encore-id="icon"
+                className="Svg-sc-ytk21e-0 haNxPq"
+              >
+                <path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z"></path>
+              </svg>
+              <p>Your Library</p>
+            </div>
+            <div className="library-content">
+              {pinlike ? (
+                <Libraryitem like={true} likeRender={likeRender} />
+              ) : (
+                ""
+              )}
+              {pinPlaylist ? (
+                Orgplaylist?.length > 0 ? (
+                  <Libraryitem like={false} likeRender={playlistRender} />
+                ) : (
+                  ""
+                )
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+  };
+
+  Cookies.set("pinlike", pinlike);
+  Cookies.set("pinPlaylist", pinPlaylist);
+  const [LibraryContextY, setLibrayContextY] = useState();
+  const [LibraryContextX, setLibrayContextX] = useState();
+  const [LibraryContextDisplay, setLibrayContextDisplay] = useState("none");
+
+  const PinPlaylist = async (e) => {
+    e.preventDefault();
+    if (pinPlaylist) {
+      setpinPlaylist(false);
+      await Cookies.remove("pinPlaylist");
+      await Cookies.set("pinPlaylist", pinPlaylist);
+    } else {
+      await Cookies.remove("pinPlaylist");
+      await Cookies.set("pinPlaylist", pinPlaylist);
+      setpinPlaylist(true);
+    }
+    setLibrayContextDisplay("none");
+  };
+  const PinLike = (e) => {
+    e.preventDefault();
+    if (pinlike) {
+      setpinlike(false);
+    } else {
+      setpinlike(true);
+    }
+    setLibrayContextDisplay("none");
+  };
+  const [contextDisplay, setcontextDisplay] = useState("none");
+  const ContextClick = (e) => {
+    e.preventDefault();
+    if (LibraryContextDisplay === "flex") {
+      setLibrayContextDisplay("none");
+    } else {
+      setLibrayContextDisplay("none");
+    }
+  };
+  const LibraryContext = (e) => {
+    e.preventDefault();
+
+    setLibrayContextX(e.pageX + "px");
+    setLibrayContextY(e.pageY + "px");
+
+    if (contextDisplay === "flex") {
+      setLibrayContextDisplay("none");
+    } else {
+      setLibrayContextDisplay("flex");
+    }
+  };
+
+  // const Context=(e)=>{
+  // e.preventDefault()
+
+  // setContextY(e.pageY + "px")
+  // setContextX(e.pageX + "px")
+  // if (contextDisplay==='flex'){
+  //   setcontextDisplay('none')
+  // } else {
+
+  //   setcontextDisplay('flex')
+  //   setLibrayContextDisplay("none")
+  // }
+
+  // }
   return (
     <Wrapper>
-      <LeftRender/>
-     
-      <div className="Right">
+      <LeftRender />
+
+      <div ref={ToogleRef} className="Right">
         <div className="content">
           <Render />
         </div>
@@ -157,71 +330,105 @@ if (Toogle){
     </Wrapper>
   );
 };
-const Toogle_main=styled.div`
-border-radius: 1.5rem;
-display: flex;
-flex-direction:column;
-justify-content: flex-start;
-margin: 1rem;
-width:10rem;
-gap:1rem;
-height: 100%;
 
-.Toogle-library{
-  background: black;
-  width: 100%; 
-  padding: 1rem;
-  height:71%;
-  border-radius: 1.5rem;
-  display: flex;
-  flex-direction:column;
-  .Toogle-library-header{
-    border-radius: 1.5rem;
+export const PlaylistContext = styled.div`
+  width: 17rem;
+  padding: 0.5rem;
+  z-index: 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000;
+  border-radius: 0.5rem;
+  display: none;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  background: #282828;
+  position: absolute;
+  li {
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width:100%;
-    height:18%;
-    &:hover,
-    &active {
-      background: rgba(255, 255, 255, 0.13);
-    }
-    svg{
-      fill:white;
-    }
-   
-   
-  }
-}
-.Toogle-navigation{
-  padding: 1rem;
-  background: black;
-  width: 100%;
-  height: 25%;
-  border-radius: 1.5rem;
-  display: flex;
-  flex-direction:column;
-  gap:1rem;
-  a{
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
-    height: 42%;
-    font-size:3rem;
-    border-radius: 1.5rem;
+    font-size: 1.5rem;
+    padding: 1rem;
     color: white;
     &:hover,
-        &active {
-          background: rgba(255, 255, 255, 0.13);
-        }
+    &:active {
+      background: rgba(255, 255, 255, 0.19);
+    }
   }
-}
-`
+`;
+const Toogle_main = styled.div`
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 1rem;
+  width: 10rem;
+  gap: 1rem;
+  height: 100%;
+
+  .Toogle-library {
+    background: black;
+    width: 100%;
+    padding: 0.5rem;
+    height: 71%;
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    .Toogle-library-content {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .Toogle-library-header {
+      border-radius: 0.7rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 17%;
+      &:hover,
+      &active {
+        background: rgba(255, 255, 255, 0.13);
+      }
+      svg {
+        color: black;
+        fill: white;
+      }
+    }
+  }
+  .Toogle-navigation {
+    background: black;
+    width: 100%;
+    height: 25%;
+    padding: 0.5rem;
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 50%;
+      font-size: 3rem;
+      border-radius: 0.7rem;
+      color: white;
+      &:hover,
+      &active {
+        background: rgba(255, 255, 255, 0.13);
+      }
+    }
+  }
+  @media only screen and (max-width: ${({ theme }) => theme.media.mobile}) {
+    width: 6rem;
+    gap: 0.5rem;
+    margin: 0.5rem;
+  }
+`;
 const Wrapper = styled.section`
   width: 100%;
-  height: 91vh;
+  height: 95vh;
   background: ${({ theme }) => theme.colors.bg};
   display: flex;
   .Left {
@@ -290,9 +497,10 @@ const Wrapper = styled.section`
         height: 8rem;
         display: flex;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: flex-start;
+        padding: 2.5rem;
         p {
-          padding: 0;
+          padding: 1rem;
           font-size: 2rem;
           font-weight: 600;
           margin: 0;
@@ -309,12 +517,13 @@ const Wrapper = styled.section`
     background: black;
     border-radius: 1.5rem;
     margin: 1rem 0;
+
     width: 78%;
-    height: 100%;
+    height: 97%;
     display: flex;
     flex-direction: column;
     ::-webkit-scrollbar-track {
-      background: black;
+      background: transparent;
     }
     ::-webkit-scrollbar {
       width: 1.5rem;

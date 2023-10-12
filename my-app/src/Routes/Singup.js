@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { styled } from "styled-components";
 import { GrStatusWarning } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,10 @@ const Singup = () => {
     email: "",
     password: "",
   });
+  useEffect(() =>{
+    window.scroll(0,0);
+    document.title= 'Signup'
+  }, []);
 
   const hendleInput = (e) => {
     const name = e.target.name;

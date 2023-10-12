@@ -1,19 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
+import { GlobalContext } from '../Context/SongContext'
 
-const Libraryitem = () => {
-
+const Libraryitem = ({likeRender,like,Context}) => {
+const {User,Orgplaylist}=GlobalContext()
  
   return (
-    <Wrapper  >
+    <Wrapper onClick={likeRender} onContextMenu={Context}>
       <div className='image'>
-          <img src="https://misc.scdn.co/liked-songs/liked-songs-640.png" alt="" />
+          <img src={like?"https://misc.scdn.co/liked-songs/liked-songs-640.png":Orgplaylist[0]?.image_url} alt={like?"Like":Orgplaylist[0]?.like} />
       </div>
       <div className='content'> 
         <h4>
-          Your Like Songs
+          {like?'Your Like Songs':"Your Playlist"}
         </h4>
-        <p>Playlist 0 Songs</p>
+        <p>{like?'Liked. '+User.Playlist.length+' Songs':"Playlist. "+User.OrgPlaylist?.length+" Songs"}</p>
 
       </div>
     </Wrapper>

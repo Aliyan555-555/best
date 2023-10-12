@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import  {ToogleNav}from "../App"
-import { useContext } from "react";
+import { useContext,useEffect } from "react";
 import { GrStatusWarning } from 'react-icons/gr';
 
 
@@ -14,6 +14,10 @@ const Login = () => {
   const [email,setemail]=useState('');
   const [password,setpassword]=useState('');
   const {Toogle,setToogle}=useContext(ToogleNav);
+  useEffect(() =>{
+    window.scroll(0,0);
+    document.title= 'Login'
+  }, []);
 
   const Post=async(e)=>{
     e.preventDefault();

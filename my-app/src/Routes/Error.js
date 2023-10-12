@@ -2,8 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 import  Button  from '../Deco/Button'
+import { useEffect } from 'react'
 
 const Error = () => {
+  useEffect(() =>{
+    window.scroll(0,0);
+    document.title= '404'
+  }, []);
   return (
     <ErrorStyled>
       <h1>404</h1>
@@ -19,13 +24,14 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 h1{
-  font-size: 10rem;
+  font-size: 15rem;
   margin-bottom: -1.5rem;
 }
-a{
-  cursor: pointer;
-}
+a {button{
 
+cursor: pointer;
+}
+}
 
 `
 export default Error

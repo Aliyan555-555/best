@@ -4,8 +4,11 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 const Authenticate=require('../middelware/authenticate')
 require("../Database");
+  const db=require("../Database");
 const User = require("../models/userSchema");
-const Song=require("../models/songSchema")
+const Song=require("../models/songSchema");
+const { ObjectId } = require("mongodb");
+
 
 // ==========registration=============section===================
 router.post("/registor", async (req, res) => {
@@ -91,7 +94,7 @@ router.get("/api/v1/song",(req,res)=>{
 router.post("/addsong",Authenticate,async(req,res)=>{
  try {
    const {_id,title,relise_date,artist,duration,company,image_url,song_url,type}=req.body;
-   
+   console.log(!req.UserPlaylist.filter((element) => element._id ==_id).length>1)
   if(!req.UserPlaylist.filter((element) => element._id ==_id).length>0){
     console.log('song-not-add')
  
@@ -116,7 +119,7 @@ router.post("/Recentlyplayed",Authenticate,async(req,res)=>{
  try {
    const {_id,title,relise_date,artist,duration,company,image_url,song_url,type}=req.body;
   
-  // if(!req.Recentlyplayed.filter((element) => element._id ==_id).length>0){
+  if(!req.Recentlyplayed.filter((element) => element._id ==_id).length>0){
     console.log('song-not-add')
    const FindUser=await User.findOne({_id:req.UserId})
   
@@ -125,7 +128,7 @@ router.post("/Recentlyplayed",Authenticate,async(req,res)=>{
      res.status(201).json({message:"add-song"})
     await FindUser.save()
    } 
-  // }
+  }
  } catch (error) {
   console.log(error)
 
@@ -133,12 +136,45 @@ router.post("/Recentlyplayed",Authenticate,async(req,res)=>{
 
 
 })
+router.post("/Orgplaylist",Authenticate,async(req,res)=>{
+ try {
+   const {_id,title,relise_date,artist,duration,company,image_url,song_url,type}=req.body;
+ 
+  if(!req.OrgPlaylist.filter((element) => element._id ==_id).length>0){
+    console.log('song-not-add')
+   const FindUser=await User.findOne({_id:req.UserId})
+  
+   if (FindUser){
+     const usersong=await FindUser.OrgPlaylists(_id,title,relise_date,artist,duration,company,image_url,song_url,type)
+     res.status(201).json({message:"add-song"})
+    await FindUser.save()
+   } 
+  }
+ } catch (error) {
+  console.log(error)
+}
+})
+router.post("/Orgplaylist/delete",Authenticate,async(req,res)=>{
+  try {
+    const RootUser=req.rootUser;
+    const {_id}=req.body
+   User.updateOne({_id:RootUser._id},{$pull:{OrgPlaylist:{_id:'6500e0328f982fc9c3a373b5'}}})
 
-
+  } catch (error) {
+    console.log(error)
+  }
+})
 router.get('/api/v1/Recent',Authenticate,(req,res)=>{
   res.send(req.Recentlyplayed)
+})
+
+router.get('/api/v1/OrgPlaylist',Authenticate,(req,res)=>{
+  res.send(req.OrgPlaylist)
  
 
+})
+router.get('/api/v1/rootUser',Authenticate,(req,res)=>{
+  res.send(req.rootUser)
 })
 router.get('/api/v1/Playlist',Authenticate,(req,res)=>{
   res.send(req.UserPlaylist)

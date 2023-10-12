@@ -1,0 +1,2 @@
+new-mernDb
+pass=zFjhmnr26EfjcCTf

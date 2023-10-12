@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const Shema=require('./songSchema')
+const Shema=require('./songSchema');
+const Songs = require("./songSchema");
 const userSchema = new mongoose.Schema({
+  Pic:{type:String},
   name: {
     type: String,
     required: true,
@@ -57,6 +59,9 @@ const userSchema = new mongoose.Schema({
 
   }
 ],
+OrgPlaylist:{
+  type:Array
+},
   Playlist:[
     {title: {
       type: String,
@@ -147,6 +152,16 @@ userSchema.methods.Recentlyplayed=async function(_id,title,relise_date,artist,du
     console.log(error)
   }
 }
+userSchema.methods.OrgPlaylists=async function(_id,title,relise_date,artist,duration,company,image_url,song_url,type){
+  try {
+    this.OrgPlaylist= await this.OrgPlaylist.concat({_id,title,relise_date,artist,duration,company,image_url,song_url,type})
+    await this.save()
+   
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 
 const User = mongoose.model("USER", userSchema);
 module.exports = User;

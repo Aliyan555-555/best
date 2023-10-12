@@ -2,17 +2,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Routes/Home";
 import Navigation from "./Components/Navigation";
 import { ThemeProvider } from "styled-components";
-import Playlist from "./Routes/Playlist";
-
 import Singup from "./Routes/Singup";
 import Login from "./Routes/Login";
 import SingleProduct from "./Routes/SingleProduct";
 import Error from "./Routes/Error";
 import { GlobalStyle } from "./GlobleStyle";
-import { SongProvider } from './Context/SongContext';
 import Logout from "./Routes/Logout";
 import { createContext, useReducer, useState } from "react";
-import { RiNurseLine } from "react-icons/ri";
 export const ToogleNav=createContext()
 
 
@@ -36,7 +32,7 @@ console.log(Toogle)
       white: "#f2f6fa",
       btn: "rgb(10, 1, 58)",
       boder: "rgb(0, 130,800)",
-      lighttranparent:"rgba(247, 251, 255, 0.4)",
+      lighttranparent:"rgba(247, 251, 255, 0.2)",
     },
     media:{
       mobile:'700px',
@@ -45,7 +41,10 @@ console.log(Toogle)
 
     }
   }; 
-  
+  document.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+   
+  });
   return (
     
     
@@ -56,7 +55,6 @@ console.log(Toogle)
         <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/PlayList" element={<Playlist />} />
           <Route path="/single/:id" element={<SingleProduct/>} />
           <Route path="/Singup" element={<Singup/>} />
           <Route path="/Login" element={<Login/>} />

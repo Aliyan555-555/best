@@ -1,15 +1,15 @@
 {
   "Songs": [
     {
-      "_id": "64e31d1f19391fa1d235340b",
-      "title": " Badtameez Dil",
-      "relise_date": "2013",
-      "artist": "Pritam, Benny Dayal, Shefali Alvares",
-      "duration": "4:13",
+     
+      "title": " Unholy",
+      "relise_date": " 2023",
+      "artist": "Sam Smith ft. Kim Petras",
+      "duration": "2:45",
       "company": "Cock studio",
-      "image_url": "./img/Covre/Badtameez_cover.jpg",
-      "song_url": "../song/Badtameez.mp3",
-      "type": "song"
+      "image_url": "https://a10.gaanacdn.com/gn_img/albums/dwN398KDPa/N39yQVdd3D/size_l.jpg",
+      "song_url": "../song/Bones.mp3",
+      "type": "Pop"
     },
     {
       "_id": "64e31db719391fa1d235340c" ,

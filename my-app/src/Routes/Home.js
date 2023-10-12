@@ -8,6 +8,10 @@ import Library from '../Components/Library'
 import AllSongs from '../Components/AllSongs'
 import { ToogleNav } from '../App'
 const Home = () => {
+  useEffect(() =>{
+    window.scroll(0,0);
+    document.title= 'Listening Your Favorite MUSIC'
+  }, []);
   const {Toogle,setToogle}=useContext(ToogleNav)
   const containerRef = useRef(null)
   const history = useNavigate()

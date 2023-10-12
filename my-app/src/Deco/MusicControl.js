@@ -1,20 +1,22 @@
-import { useState, useRef} from "react";
+import { useState, useRef,useEffect} from "react";
 
 import { RiForward10Line } from "react-icons/ri";
 import { styled } from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPause, faPlay,faDownload,faRotateLeft,faRotateRight } from "@fortawesome/free-solid-svg-icons";
 import { GlobalContext } from "../Context/SongContext";
 
 const MusicControl = ({ data, value }) => {
+
   const [Btn, setBtn] = useState(faPlay);
-  const url = data[0].song_url;
+  const [url,seturl] =useState(data[0]?.song_url)
+
   const audio = new Audio(url);
   audio.load();
   const [audioStatus, setaudioStatus] = useState(false);
   const myref = useRef();
   const {GetRecentlyPlay}=GlobalContext()
-  
+ 
 
   const PostRecentlyplayed=async()=>{
     const datasong={
@@ -26,24 +28,13 @@ const MusicControl = ({ data, value }) => {
       company: data[0].company,
       image_url: data[0].image_url,
       song_url: data[0].song_url,
-      type: data[0].type,
-    }
+      type: data[0].type,}
    try{
       await fetch("/Recentlyplayed",{
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(datasong)
-      })
-    
-  
-     }catch (error) {
-      
-    }
-
-  }
-
+          "Content-Type": "application/json",},body: JSON.stringify(datasong)
+      })}catch (error) {}}
   const Play = () => {
     GetRecentlyPlay()
    try {
@@ -90,13 +81,14 @@ const MusicControl = ({ data, value }) => {
     );
   }
 
-  const [progress, setProgress] = useState(parseInt(data[0].duration));
+  const [progress, setProgress] = useState(parseInt(data[0]?.duration));
   const hendleProgress = (e) => {
     setProgress(e.target.value);
   };
   if (value) {
     document.getElementById("SongControl").style.bottom = "0%";
   }
+ 
 
   setTimeout(() => {
     try {
@@ -135,25 +127,26 @@ const MusicControl = ({ data, value }) => {
     <Buttombar id="SongControl">
       <div className="song_info">
         <div className="img">
-          <img src={data[0].image_url} alt="" />
+          <img src={data[0]?.image_url} alt="" />
         </div>
         <div className="info">
-          <h3>{data[0].title}</h3>
-          <p>{data[0].artist}</p>
+          <h3>{data[0]?.title}</h3>
+          <p>{data[0]?.artist}</p>
         </div>
       </div>
       <div className="song_control">
-        <span>
-          <RiForward10Line className="icon" />
+      
+      <span>
+        <FontAwesomeIcon  icon={faRotateLeft} />
         </span>
         <span onClick={audioStatus ? Pause : Play}>
           {htmlTag}
-
           <FontAwesomeIcon icon={Btn} className="icon" />
         </span>
         <span>
-          <RiForward10Line className="icon" />
+        <FontAwesomeIcon icon={faRotateRight} />
         </span>
+       
       </div>
       <div className="progress">
         <p>{currentTime1}</p>
@@ -162,7 +155,7 @@ const MusicControl = ({ data, value }) => {
           <div className="progress-out" id="progress"></div>
         </div>
         <a href={url} download={url}>
-          Downlode
+        <FontAwesomeIcon icon={faDownload} />
         </a>
       </div>
     </Buttombar>
@@ -190,12 +183,17 @@ const Buttombar = styled.section`
     width: 60%;
     height: 100%;
     a {
-      background: ${({ theme }) => theme.colors.hover};
-      padding: 1rem 2rem;
-      font-size: 1.5rem;
+    
+      padding: 1.4rem 1.5rem;
+      border-radius: 50%;
+      font-size: 2.5rem;
       font-weight: 600;
       color: ${({ theme }) => theme.colors.white};
       text-decoration: none;
+      &:hover,
+      &:active{
+        background:${({theme})=>theme.colors.hover};
+      }
     }
     .pro-con {
       margin-top: 1rem;
@@ -224,7 +222,7 @@ const Buttombar = styled.section`
     justify-content: center;
     span {
       cursor: pointer;
-      border: 0.1rem solid ${({ theme }) => theme.colors.helper};
+
       display: flex;
       align-items: center;
       justify-content: center;
@@ -232,11 +230,12 @@ const Buttombar = styled.section`
       border-radius: 50%;
 
       .icon {
+    
       }
     }
   }
   .song_info {
-    border-right: 2px solid white;
+    
     height: 100%;
 
     width: 20%;

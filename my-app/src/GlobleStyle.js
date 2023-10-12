@@ -16,8 +16,8 @@ font-family: 'Work Sans', sans-serif;
  
 }
 ::selection {
-      color: ${({theme})=>theme.colors.bg_light};
-      background: ${({theme})=>theme.colors.bg};
+  
+      background: transparent;
     }
 /* Track */
 ::-webkit-scrollbar-track {
@@ -35,6 +35,7 @@ font-family: 'Work Sans', sans-serif;
   background: #ff0062; 
 }
 html{
+height: 191vh;
       width: 100vw;
       overflow-x: hidden;
       font-size:50.5%;
@@ -48,6 +49,7 @@ h1{
 
 }
 body{
+      height: 191vh;
       width: 100vw;
 
       overflow-x: hidden;

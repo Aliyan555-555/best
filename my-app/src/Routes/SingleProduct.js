@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import { styled } from "styled-components";
 import { GlobalContext } from "../Context/SongContext";
 import { useParams } from "react-router-dom";
 import Button from "../Deco/Button";
 import { AiFillHeart } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
-
 import MusicControl from "../Deco/MusicControl";
 import Related from "../Components/Related";
-
 const SingleProduct = () => {
-  const { state } = GlobalContext();
+  const { state,GetUserSong } = GlobalContext();
   const { id } = useParams();
   const [Status, setStatus] = useState("Play");
   const [Liked, setLiked] = useState(false);
-  const [dropvalue, setdropvalue] = useState(false);
+
   const [value, setvalue] = useState(false);
   const Data = state.Songs.filter((element) => element._id === id);
   const MusicData = Data.map((DATA) => DATA);
   const artiste = Data.map((DATA) => DATA.artist);
+  useEffect(() =>{
+    window.scroll(0,0);
+    document.title= state.Songs.filter((element) => element._id === id).map((data)=>data.title)
+  }, []);
 
   const Like = async (e) => {
   if (Liked) {
@@ -29,8 +31,12 @@ const SingleProduct = () => {
     setLiked(true);
   }
   }
-  const PostLibraryData = async (e) => {
+  const PostLikeData = async (e) => {
+
+
     e.preventDefault();
+   
+    document.getElementById("Like").style.color = "red";
     
     try {
       const res = await fetch("/addsong", {
@@ -50,25 +56,20 @@ const SingleProduct = () => {
           type: MusicData[0].type,
         }),
       });
-
      
+
+      GetUserSong()
+      GetUserSong()
     } catch (error) {
       console.log(error);
     }
+
   };
 
-  const drop = () => {
-    if (dropvalue) {
-      document.getElementById("d").style.display = "none";
-      setdropvalue(false);
-    } else {
-      document.getElementById("d").style.display = "block";
-      setdropvalue(true);
-    }
-  };
+
 
   return (
-    <div>
+    <Parent>
       <form method="POST">
         {state.Songs.filter((element) => element._id === id).map((data) => (
           <Wrapper key={data._id}>
@@ -89,14 +90,11 @@ const SingleProduct = () => {
                   <Button btn_text={Status} />
                 </div>
               </div>
-              <div className="info_right">
-                <AiFillHeart id="Like" className="icon" onClick={Like}/>
+              <div className="info_right" >
+                <AiFillHeart id="Like" className="icon" onClick={PostLikeData}/>
 
-                <BiDotsVerticalRounded onClick={drop} className="icon" />
-                <div id="d" className="Dropdown">
-                  <button onClick={PostLibraryData}>Add Library</button>
-                  <button>Remove Play</button>
-                </div>
+                <BiDotsVerticalRounded  className="icon" />
+               
               </div>
             </div>
           </Wrapper>
@@ -104,11 +102,20 @@ const SingleProduct = () => {
       </form>
       <Related artist={artiste} />
       <MusicControl data={MusicData} value={value} />
-    </div>
+    </Parent>
   );
 };
+const Parent  = styled.div`
+width:100%;
+position:relative;
+top:7.3rem;
+height: 90vh;
+
+padding: 5rem 0;
+overflow: hidden;
+`
 const Wrapper = styled.section`
-  margin: 12rem auto 0 auto;
+  margin: 0rem auto 0 auto;
   display: flex;
 
   align-items: center;
