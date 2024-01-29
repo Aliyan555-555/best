@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const Shema=require('./songSchema');
-const Songs = require("./songSchema");
+
 const userSchema = new mongoose.Schema({
   Pic:{type:String},
   name: {
