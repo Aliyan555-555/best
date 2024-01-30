@@ -3,7 +3,6 @@ node_modules/
 
 # Ignore config.env in root directory
 config.env
-server/app.js
 # Ignore node_modules in server directory
 server/node_modules/
 
