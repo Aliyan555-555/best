@@ -8,7 +8,7 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import MusicControl from "../Deco/MusicControl";
 import Related from "../Components/Related";
 const SingleProduct = () => {
-  const { state,GetUserSong } = GlobalContext();
+  const { state,GetUserSong,PORT } = GlobalContext();
   const { id } = useParams();
   const [Status, setStatus] = useState("Play");
   const [Liked, setLiked] = useState(false);
@@ -39,7 +39,7 @@ const SingleProduct = () => {
     document.getElementById("Like").style.color = "red";
     
     try {
-      const res = await fetch("/addsong", {
+      const res = await fetch(`${PORT}/addsong`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

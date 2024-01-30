@@ -7,17 +7,19 @@ import Library from '../Components/Library'
 
 import AllSongs from '../Components/AllSongs'
 import { ToogleNav } from '../App'
+import { GlobalContext } from '../Context/SongContext'
 const Home = () => {
   useEffect(() =>{
     window.scroll(0,0);
     document.title= 'Listening Your Favorite MUSIC'
   }, []);
   const {Toogle,setToogle}=useContext(ToogleNav)
+  const {PORT} = GlobalContext()
   const containerRef = useRef(null)
   const history = useNavigate()
   const Post=async()=>{
     try {
-      const res=await fetch('/home',{
+      const res=await fetch(`${PORT}/api/v1/home`,{
         method:'GET',
         headers:{
           Accept:'application/json',
@@ -27,7 +29,6 @@ const Home = () => {
       })
       const data=await res.json()
       if (!res.status===200){
-       console.log("user-not")
        
       }else{
         setToogle(true)

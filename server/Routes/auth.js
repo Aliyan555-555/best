@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
   res.send("hello from router");
 })
 // ==========registration=============section===================
-router.post("/registor", async (req, res) => {
+router.post("/api/v1/registor", async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     return res.status(422).json({ error: "some error occured" });
@@ -33,7 +33,7 @@ router.post("/registor", async (req, res) => {
 });
 
 // ===========login============section====================
-router.post("/signin", async (req, res) => {
+router.post("/api/v1/signin", async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -45,14 +45,15 @@ router.post("/signin", async (req, res) => {
         const match = await bcrypt.compare(password, userLogin.password);
         const token= await userLogin.generateAuthtoken()
         
-        res.cookie("jwtoken",token,{
-          httpOnly:true,
-          expires: new Date(Date.now() + 25892000000)
-        })
+        
       
         if (!match) {
          res.status(400).json({ error: "invelide Properte " });
         } else {
+          res.cookie("jwtoken",token,{
+          httpOnly:true,
+          expires: new Date(Date.now() + 25892000000)
+        })
         res.json({ message: "user login successfully" });
         }
     } else {
@@ -67,7 +68,7 @@ router.post("/signin", async (req, res) => {
 
 // ===========logout============section====================
 
-router.get('/home',Authenticate,(req,res)=>{
+router.get('/api/v1/home',Authenticate,(req,res)=>{
   res.send(req.rootUser)
 })
 // ===========Test======Cookie============store
@@ -96,9 +97,7 @@ router.get("/api/v1/song",(req,res)=>{
 router.post("/addsong",Authenticate,async(req,res)=>{
  try {
    const {_id,title,relise_date,artist,duration,company,image_url,song_url,type}=req.body;
-   console.log(!req.UserPlaylist.filter((element) => element._id ==_id).length>1)
   if(!req.UserPlaylist.filter((element) => element._id ==_id).length>0){
-    console.log('song-not-add')
  
    const FindUser=await User.findOne({_id:req.UserId})
    if (FindUser){
@@ -122,7 +121,6 @@ router.post("/Recentlyplayed",Authenticate,async(req,res)=>{
    const {_id,title,relise_date,artist,duration,company,image_url,song_url,type}=req.body;
   
   if(!req.Recentlyplayed.filter((element) => element._id ==_id).length>0){
-    console.log('song-not-add')
    const FindUser=await User.findOne({_id:req.UserId})
   
    if (FindUser){
@@ -143,7 +141,6 @@ router.post("/Orgplaylist",Authenticate,async(req,res)=>{
    const {_id,title,relise_date,artist,duration,company,image_url,song_url,type}=req.body;
  
   if(!req.OrgPlaylist.filter((element) => element._id ==_id).length>0){
-    console.log('song-not-add')
    const FindUser=await User.findOne({_id:req.UserId})
   
    if (FindUser){

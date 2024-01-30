@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { GlobalContext } from '../Context/SongContext'
 const MusicItem = ({data}) => {
-  const {OrgPlaylist}=GlobalContext()
+  const {OrgPlaylist,PORT}=GlobalContext()
 const [contextX,setcontextX]=useState()
 const [contextY,setcontextY]=useState()
 const [contextDisplay,setcontextDisplay]=useState('none')
@@ -23,7 +23,7 @@ const toogle = useRef()
   
   const AddPlaylist=async()=>{
     try {
-      const res = await fetch("/Orgplaylist",{
+      const res = await fetch(`${PORT}/Orgplaylist`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -131,7 +131,7 @@ const LeftRender = ({Toogle,hendleToogle,ToogleRef,setitemlimet,Renderhendle,hom
           <div className="library-content">
             {pinlike ? <Libraryitem like={true} likeRender={likeRender} /> : ""}
             {pinPlaylist ? (
-              Orgplaylist?.length > 0 ? (
+              Orgplaylist?.length != 0 ? (
                 <Libraryitem like={false} likeRender={playlistRender} />
               ) : (
                 ""
@@ -490,6 +490,9 @@ const Wrapper = styled.section`
         padding: 2rem;
         align-items: center;
         justify-content: flex-start;
+        background: #000;
+        outline: none;
+        border: none;
         font-size: 3rem;
         color: ${({ theme }) => theme.colors.text};
         width: 100%;

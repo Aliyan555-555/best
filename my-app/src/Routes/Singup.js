@@ -2,11 +2,12 @@ import React, { useState,useEffect } from "react";
 import { styled } from "styled-components";
 import { GrStatusWarning } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../Context/SongContext";
 const Singup = () => {
   const history = useNavigate();
   const [warn, setwran] = useState("");
   const [wtrue, setwtrue] = useState(false);
-
+  const {PORT} = GlobalContext()
   const [user, setuser] = useState({
     name: "",
     email: "",
@@ -25,7 +26,7 @@ const Singup = () => {
   const Post = async (e) => {
     e.preventDefault();
     const { name, email, password } = user;
-    const res = await fetch("/registor", {
+    const res = await fetch(`${PORT}/api/v1/registor`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -127,7 +128,9 @@ const Singup = () => {
 };
 const Wrapper = styled.section`
   position: relative;
+  max-height:100vh;
   display: flex;
+  overflow: hidden;
 
   align-items: center;
   justify-content: center;

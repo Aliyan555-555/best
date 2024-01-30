@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import  {ToogleNav}from "../App"
 import { useContext,useEffect } from "react";
 import { GrStatusWarning } from 'react-icons/gr';
+import { GlobalContext } from "../Context/SongContext";
 
 
 const Login = () => {
@@ -14,6 +15,7 @@ const Login = () => {
   const [email,setemail]=useState('');
   const [password,setpassword]=useState('');
   const {Toogle,setToogle}=useContext(ToogleNav);
+  const {PORT} = GlobalContext()
   useEffect(() =>{
     window.scroll(0,0);
     document.title= 'Login'
@@ -21,7 +23,7 @@ const Login = () => {
 
   const Post=async(e)=>{
     e.preventDefault();
-   const res=await fetch('/signin',{
+   const res=await fetch(`${PORT}/api/v1/signin`,{
       method:'POST',
       headers:{
         'Content-Type':'application/json'
@@ -45,7 +47,6 @@ const Login = () => {
 
     }
   }
-  console.log(Toogle)
 
   const secc = "rgba(0, 255, 40, 0.64)";
   const warning = "rgba(255, 242, 0, 1)";

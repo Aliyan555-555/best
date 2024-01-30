@@ -15,7 +15,6 @@ export const ToogleNav=createContext()
 function App() {
 
   const [Toogle,setToogle]=useState(null)
-console.log(Toogle)
 
   const theme = {
     colors: {

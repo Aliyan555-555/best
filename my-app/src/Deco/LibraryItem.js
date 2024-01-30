@@ -14,7 +14,7 @@ const {User,Orgplaylist}=GlobalContext()
         <h4>
           {like?'Your Like Songs':"Your Playlist"}
         </h4>
-        <p>{like?'Liked. '+User.Playlist.length+' Songs':"Playlist. "+User.OrgPlaylist?.length+" Songs"}</p>
+        <p>{like?'Liked. '+ User.Playlist?.length+' Songs':"Playlist. "+User.OrgPlaylist?.length+" Songs"}</p>
 
       </div>
     </Wrapper>

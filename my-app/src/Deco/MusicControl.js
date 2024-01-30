@@ -15,7 +15,7 @@ const MusicControl = ({ data, value }) => {
   audio.load();
   const [audioStatus, setaudioStatus] = useState(false);
   const myref = useRef();
-  const {GetRecentlyPlay}=GlobalContext()
+  const {GetRecentlyPlay,PORT}=GlobalContext()
  
 
   const PostRecentlyplayed=async()=>{
@@ -30,7 +30,7 @@ const MusicControl = ({ data, value }) => {
       song_url: data[0].song_url,
       type: data[0].type,}
    try{
-      await fetch("/Recentlyplayed",{
+      await fetch(`${PORT}/Recentlyplayed`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",},body: JSON.stringify(datasong)

@@ -10,8 +10,8 @@ import reducer from "../Reducer/Reducer";
 const SongContext = createContext();
 
 const SongProvider = ({ children }) => {
-  const API = "/api/v1/songs";
   const initialstate = { isError: false, isLoading: false, Songs: [] };
+  const PORT = "http://localhost:5000"
   const [state, dispatch] = useReducer(reducer, initialstate);
   const [playlist, setplaylist] = useState([]);
   const inital = { isLoading: false, RecentlyPlay: [] };
@@ -38,7 +38,7 @@ const SongProvider = ({ children }) => {
       dispatch({
         type: "LOADING",
       });
-      const res = await axios.get("/api/v1/song");
+      const res = await axios.get(`${PORT}/api/v1/song`);
       const product = await res.data;
       dispatch({
         type: "GET_DATA",
@@ -51,7 +51,7 @@ const SongProvider = ({ children }) => {
   const GetUserSong = async () => {
     try {
      
-      const res = await axios.get("/api/v1/Playlist");
+      const res = await axios.get(`${PORT}/api/v1/Playlist`);
       const playlist = await res.data;
       setplaylist(playlist);
     } catch (error) {
@@ -61,7 +61,7 @@ const SongProvider = ({ children }) => {
 
   const GetRecentlyPlay = async () => {
     try {
-      const res = await axios.get("/api/v1/Recent");
+      const res = await axios.get(`${PORT}/api/v1/Recent`);
       const RecentlyPlay = await res.data;
 
       setRecentlyPlay({
@@ -74,7 +74,7 @@ const SongProvider = ({ children }) => {
   const [User, setUser] = useState({});
   const GetUseData = async () => {
     try {
-      const res = await axios.get("/api/v1/rootUser");
+      const res = await axios.get(`${PORT}/api/v1/rootUser`);
       const user = await res.data;
       if (user) {
         setUser(user);
@@ -84,10 +84,12 @@ const SongProvider = ({ children }) => {
   const [Orgplaylist, setOrgplaylist] = useState([]);
   const OrgPlaylist = async () => {
     try {
-      const res = await axios.get("/api/v1/OrgPlaylist");
+      const res = await axios.get(`${PORT}/api/v1/OrgPlaylist`);
       const user = await res.data;
       setOrgplaylist(user);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   };
 
  const [NavProfile, setNavProfile] = useState(false);
@@ -112,6 +114,7 @@ const SongProvider = ({ children }) => {
     <SongContext.Provider
       value={{
         state,
+        PORT,
         playlist,
         RecentlyPlayed,
         GetRecentlyPlay,

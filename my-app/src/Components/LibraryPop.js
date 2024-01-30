@@ -9,7 +9,7 @@ import axios from "axios";
 import { Wrapper } from "./AllSongs";
 
 const LibraryPop = ({ itemlimet }) => {
-  const { state } = GlobalContext();
+  const { state,PORT } = GlobalContext();
   const length = state.Songs.filter((element) => element.type === "Pop");
   const after = length.length >= 5;
   const [item, setitem] = useState(itemlimet);
@@ -44,7 +44,7 @@ const LibraryPop = ({ itemlimet }) => {
       type: "Pop",
     };
     try {
-      const res = await axios.post("/OrgPlaylist", data);
+      const res = await axios.post(`${PORT}/OrgPlaylist`, data);
     } catch (error) {
       console.log(error);
     }
