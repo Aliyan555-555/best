@@ -1,19 +1,21 @@
-import axios from 'axios'
-import React, { useState } from 'react'
-
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { styled } from 'styled-components'
 import { GlobalContext } from '../Context/SongContext'
-
 const MusicItem = ({data}) => {
   const {OrgPlaylist}=GlobalContext()
 const [contextX,setcontextX]=useState()
 const [contextY,setcontextY]=useState()
 const [contextDisplay,setcontextDisplay]=useState('none')
-  const MusicItemContect=()=>{
+const toogle = useRef()
+  const MusicItemContect=(e)=>{
     if (contextDisplay==='flex'){
+      setcontextX(e.pageX)
+      setcontextY(e.pageY)
       setcontextDisplay('none')
+      // setcontextDisplay('')
     } else {
+      
       setcontextDisplay('none')
       setcontextDisplay('flex')
     }
@@ -57,14 +59,25 @@ const [contextDisplay,setcontextDisplay]=useState('none')
    
 
   }
+  useEffect(()=>{
+    document.addEventListener('click',(e)=>{
+      setcontextDisplay('none')
+    })
+    window.addEventListener('contextmenu',(e)=>{
+        if (contextDisplay==='flex') {
+          setcontextDisplay('none')
+        }
+    })
+    // console.log("useEffect")
+  },[window.onclick || window.oncontextmenu])
   const Render=()=>{
 if (data) {
      return(
      <>
         <Context  style={{top:contextY,left:contextX,display:contextDisplay}}>
-          <li onClick={AddPlaylist}>Add Playlist</li>
+          <button onClick={AddPlaylist}>Add Playlist</button>
         </Context><Link  to={`/single/${data?._id}`}>
-       <MusicStyle  onContextMenu={MusicItemContect}>
+       <MusicStyle ref={toogle} onContextMenu={(e)=>MusicItemContect(e)}>
        
         
          <div className="s-i-cover">
@@ -102,7 +115,10 @@ flex-direction:column;
 justify-content: center;
 background:#282828;
 position: absolute;
-li{
+button{
+  background: transparent;
+  outline: none;
+  border: none;
   cursor: pointer;
   width: 100%;
   font-size:1.5rem;
