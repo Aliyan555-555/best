@@ -9,7 +9,9 @@ const User = require("../models/userSchema");
 const Song=require("../models/songSchema");
 const { ObjectId } = require("mongodb");
 
-
+router.get("/", (req, res) => {
+  res.send("hello from router");
+})
 // ==========registration=============section===================
 router.post("/registor", async (req, res) => {
   const { name, email, password } = req.body;
