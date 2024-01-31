@@ -11,7 +11,7 @@ const SongContext = createContext();
 
 const SongProvider = ({ children }) => {
   const initialstate = { isError: false, isLoading: false, Songs: [] };
-  const PORT = "http://localhost:5000"
+  const PORT = `${window.location.origin}`
   const [state, dispatch] = useReducer(reducer, initialstate);
   const [playlist, setplaylist] = useState([]);
   const inital = { isLoading: false, RecentlyPlay: [] };
