@@ -6,7 +6,8 @@ export const GlobalStyle = createGlobalStyle`
 -webkit-font-smoothing: antialiased; 
 -moz-osx-font-smoothing: grayscale;
 margin: 0;
-padding: 0;
+scroll-behavior: smooth;
+    padding: 0;
 box-sizing: border-box;
 font-family: 'Work Sans', sans-serif;
 }
@@ -15,6 +16,9 @@ font-family: 'Work Sans', sans-serif;
   width: 5px;
  
 }
+html {
+      scroll-behavior: smooth;
+    }
 ::selection {
   
       background: transparent;

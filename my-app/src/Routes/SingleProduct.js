@@ -8,7 +8,7 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import MusicControl from "../Deco/MusicControl";
 import Related from "../Components/Related";
 const SingleProduct = () => {
-  const { state,GetUserSong,PORT } = GlobalContext();
+  const { state,GetUserSong,PORT,isVisible,setIsVisible } = GlobalContext();
   const { id } = useParams();
   const [Status, setStatus] = useState("Play");
   const [Liked, setLiked] = useState(false);
@@ -65,6 +65,9 @@ const SingleProduct = () => {
     }
 
   };
+useEffect(() => {
+setIsVisible(false)
+}, [])
 
 
 

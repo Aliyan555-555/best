@@ -9,6 +9,7 @@ import Error from "./Routes/Error";
 import { GlobalStyle } from "./GlobleStyle";
 import Logout from "./Routes/Logout";
 import { createContext, useReducer, useState } from "react";
+import { GlobalContext } from "./Context/SongContext";
 export const ToogleNav=createContext()
 
 
@@ -16,6 +17,7 @@ function App() {
 
   const [Toogle,setToogle]=useState(null)
 
+const {isVisible,setIsVisible} = GlobalContext()
   const theme = {
     colors: {
       play:"rgba(255, 255, 255, 0.18)",
@@ -51,9 +53,9 @@ function App() {
       <GlobalStyle />
       <ToogleNav.Provider value={{Toogle,setToogle}}>
       <BrowserRouter>
-        <Navigation />
+        {!isVisible ?<Navigation />:""}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home/>} />
           <Route path="/single/:id" element={<SingleProduct/>} />
           <Route path="/Singup" element={<Singup/>} />
           <Route path="/Login" element={<Login/>} />

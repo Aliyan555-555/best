@@ -2,6 +2,7 @@ import React from "react";
 import { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import Cookies from "js-cookie";
+import { IoHomeOutline, IoSearchOutline } from "react-icons/io5";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { PiMagnifyingGlassFill } from "react-icons/pi";
@@ -11,7 +12,44 @@ import LibraryLike from "./LibraryLike";
 import ToogleLibraryitem from "../Deco/ToogleLibraryitem";
 import { GlobalContext } from "../Context/SongContext";
 
-const LeftRender = ({Toogle,hendleToogle,ToogleRef,setitemlimet,Renderhendle,home,Hendleserch,search,ContextClick,LibraryContext,LibraryContextDisplay,PinPlaylist,PinLike,LibraryContextY,LibraryContextX,  pinlike,pinPlaylist,likeRender,playlistRender,orgplay,likeplaylist,Profile,Activeprofile,Render,setNavProfile,NavProfile,playlist,setorgplay,setlikeplaylist,sethome,setsearch,setProfile,Orgplaylist,setpinPlaylist,setpinlike,itemlimet,}) => {
+const LeftRender = ({
+  Toogle,
+  hendleToogle,
+  ToogleRef,
+  setitemlimet,
+  Renderhendle,
+  home,
+  Hendleserch,
+  search,
+  ContextClick,
+  LibraryContext,
+  LibraryContextDisplay,
+  PinPlaylist,
+  PinLike,
+  LibraryContextY,
+  LibraryContextX,
+  pinlike,
+  pinPlaylist,
+  likeRender,
+  playlistRender,
+  orgplay,
+  likeplaylist,
+  Profile,
+  Activeprofile,
+  Render,
+  setNavProfile,
+  NavProfile,
+  playlist,
+  setorgplay,
+  setlikeplaylist,
+  sethome,
+  setsearch,
+  setProfile,
+  Orgplaylist,
+  setpinPlaylist,
+  setpinlike,
+  itemlimet,
+}) => {
   if (Toogle) {
     const hendle = () => {};
 
@@ -117,8 +155,8 @@ const LeftRender = ({Toogle,hendleToogle,ToogleRef,setitemlimet,Renderhendle,hom
           <div className="library-header" onClick={hendleToogle}>
             <svg
               role="img"
-              height="24"
-              width="24"
+              // height="24"
+              // width="24"
               aria-hidden="true"
               viewBox="0 0 24 24"
               data-encore-id="icon"
@@ -147,6 +185,10 @@ const LeftRender = ({Toogle,hendleToogle,ToogleRef,setitemlimet,Renderhendle,hom
 };
 
 const Library = () => {
+  const BottomBarHomeRef = useRef(null);
+  const BottomBarSearchRef = useRef(null);
+  const {isVisible,setIsVisible}=GlobalContext()
+  const BottomBarLibraryRef = useRef(null);
   const { Orgplaylist, setNavProfile, NavProfile, playlist } = GlobalContext();
   const ToogleRef = useRef();
   const [home, sethome] = useState(true);
@@ -154,10 +196,17 @@ const Library = () => {
   const [likeplaylist, setlikeplaylist] = useState(false);
   const [orgplay, setorgplay] = useState(false);
   const [itemlimet, setitemlimet] = useState(4.5);
+  const scrollToTop = () => {
+    window.scrollTo({
+      top:0,
+      behavior: 'smooth',
+    });
+};
   const [pinPlaylist, setpinPlaylist] = useState(true);
   const [pinlike, setpinlike] = useState(true);
   const [Profile, setProfile] = useState(false);
   const Render = () => {
+
     if (home && !search && !likeplaylist && !orgplay) {
       return <LibraryHome itemlimet={itemlimet} setitemlimet={setitemlimet} />;
     }
@@ -301,66 +350,174 @@ const Library = () => {
     }
   };
 
-  // const Context=(e)=>{
-  // e.preventDefault()
+  const handleScroll = () => {
+    const section = document.getElementById(`Library`);
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      setIsVisible(rect.top < window.innerHeight-300 && rect.bottom >=0);
+     
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check when component mounts
 
-  // setContextY(e.pageY + "px")
-  // setContextX(e.pageX + "px")
-  // if (contextDisplay==='flex'){
-  //   setcontextDisplay('none')
-  // } else {
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  })
+  useEffect(() => {
+    if (BottomBarHomeRef.current) {
+      BottomBarHomeRef.current.style.top = "-3rem";
+      BottomBarHomeRef.current.style.background = "#ffff";
+      BottomBarHomeRef.current.style.color = "#010D31";
+      BottomBarHomeRef.current.style.border = "5px solid #010D31";
+    }
+  }, []);
 
-  //   setcontextDisplay('flex')
-  //   setLibrayContextDisplay("none")
-  // }
+  const hendleSortSelecteditemBottomBar = (item, unselected1, unselected2) => {
+ 
+    item.current.style.top = "-3rem";
+    item.current.style.background = "#ffff";
+    item.current.style.color = "#010D31";
+    item.current.style.fill = "#010D31";
+    item.current.style.border = "5px solid #010D31";
+    // Unselected item 1
+    unselected1.current.style.top = "auto";
+    unselected1.current.style.background = "#010D31";
+    unselected1.current.style.color = "#fff";
+    unselected1.current.style.fill = "#fff";
+    unselected1.current.style.border = "5px solid #010D31";
+          // Unselected item 2
+    unselected2.current.style.top = "auto";
+    unselected2.current.style.background = "#010D31";
+    unselected2.current.style.color = "#fff";
+    unselected2.current.style.fill = "#fff";
+    unselected2.current.style.border = "5px solid #010D31";
+  };
+  const hendleSelectedItemBottomBar = (query) => {
+    if (query === "home") {
+      if (BottomBarHomeRef.current) {
+        scrollToTop()
+        hendleSortSelecteditemBottomBar(
+          BottomBarHomeRef,
+          BottomBarSearchRef,
+          BottomBarLibraryRef
+        );
+      }
+    } else if (query === "search") {
+      if (BottomBarSearchRef.current) {
+        hendleSortSelecteditemBottomBar(
+          BottomBarSearchRef,
+          BottomBarHomeRef,
+          BottomBarLibraryRef
+        );
+      }
+    } else if (query === "library") {
+      if (BottomBarLibraryRef.current) {
+        hendleSortSelecteditemBottomBar(
+          BottomBarLibraryRef,
+          BottomBarHomeRef,
+          BottomBarSearchRef
+        );
+      }
+    }
+  };
 
-  // }
   return (
-    <Wrapper>
-      <LeftRender
-        Toogle={Toogle}
-        hendleToogle={hendleToogle}
-        ToogleRef={ToogleRef}
-        setitemlimet={setitemlimet}
-        Renderhendle={Renderhendle}
-        home={home}
-        Hendleserch={Hendleserch}
-        search={search}
-        ContextClick={ContextClick}
-        LibraryContext={LibraryContext}
-        LibraryContextDisplay={LibraryContextDisplay}
-        PinPlaylist={PinPlaylist}
-        PinLike={PinLike}
-        pinlike={pinlike}
-        pinPlaylist={pinPlaylist}
-        likeRender={likeRender}
-        playlistRender={playlistRender}
-        orgplay={orgplay}
-        likeplaylist={likeplaylist}
-        Profile={Profile}
-        Activeprofile={Activeprofile}
-        Render={Render}
-        setNavProfile={setNavProfile}
-        NavProfile={NavProfile}
-        playlist={playlist}
-        setorgplay={setorgplay}
-        setlikeplaylist={setlikeplaylist}
-        sethome={sethome}
-        setsearch={setsearch}
-        setProfile={setProfile}
-        Orgplaylist={Orgplaylist}
-        setpinPlaylist={setpinPlaylist}
-        setpinlike={setpinlike}
-        itemlimet={itemlimet}
-        LibraryContextX={LibraryContextX}
-        LibraryContextY={LibraryContextY}
-      />
+    <Wrapper id="Library">
+      {window.innerWidth >= 440 ? (
+        <LeftRender
+          Toogle={Toogle}
+          hendleToogle={hendleToogle}
+          ToogleRef={ToogleRef}
+          setitemlimet={setitemlimet}
+          Renderhendle={Renderhendle}
+          home={home}
+          Hendleserch={Hendleserch}
+          search={search}
+          ContextClick={ContextClick}
+          LibraryContext={LibraryContext}
+          LibraryContextDisplay={LibraryContextDisplay}
+          PinPlaylist={PinPlaylist}
+          PinLike={PinLike}
+          pinlike={pinlike}
+          pinPlaylist={pinPlaylist}
+          likeRender={likeRender}
+          playlistRender={playlistRender}
+          orgplay={orgplay}
+          likeplaylist={likeplaylist}
+          Profile={Profile}
+          Activeprofile={Activeprofile}
+          Render={Render}
+          setNavProfile={setNavProfile}
+          NavProfile={NavProfile}
+          playlist={playlist}
+          setorgplay={setorgplay}
+          setlikeplaylist={setlikeplaylist}
+          sethome={sethome}
+          setsearch={setsearch}
+          setProfile={setProfile}
+          Orgplaylist={Orgplaylist}
+          setpinPlaylist={setpinPlaylist}
+          setpinlike={setpinlike}
+          itemlimet={itemlimet}
+          LibraryContextX={LibraryContextX}
+          LibraryContextY={LibraryContextY}
+        />
+      ) : (
+        ""
+      )}
 
-      <div ref={ToogleRef} className="Right">
+      <div
+        style={{ width: window.innerWidth >= 440 ? "92%" : "100%" }}
+        ref={ToogleRef}
+        className="Right"
+      >
         <div className="content">
           <Render />
         </div>
       </div>
+      {window.innerWidth <= 440 && isVisible ? (
+        <BottomBar>
+          <button
+            style={{transitionDuration:"0.8s",transitionProperty:'top'}}
+            onClick={() => hendleSelectedItemBottomBar("home")}
+            ref={BottomBarHomeRef}
+            type="button"
+          >
+            <IoHomeOutline />
+          </button>
+          <button
+            style={{transitionDuration:"0.8s",transitionProperty:'top'}}
+            onClick={() => hendleSelectedItemBottomBar("search")}
+            ref={BottomBarSearchRef}
+            type="button"
+          >
+            <IoSearchOutline />
+          </button>
+          <button
+            style={{transitionDuration:"0.8s",transitionProperty:'top'}}
+            onClick={() => hendleSelectedItemBottomBar("library")}
+            ref={BottomBarLibraryRef}
+            type="button"
+          >
+            {" "}
+            <svg
+              role="img"
+              height="24"
+              // width="24"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              data-encore-id="icon"
+              fill="#fff"
+              // className="Svg-sc-ytk21e-0 haNxPq"
+            >
+              <path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z"></path>
+            </svg>
+          </button>
+        </BottomBar>
+      ):""}
     </Wrapper>
   );
 };
@@ -465,7 +622,7 @@ const ToogleMain = styled.div`
 `;
 const Wrapper = styled.section`
   width: 100%;
-  height: 95vh;
+  height: 100vh;
   background: ${({ theme }) => theme.colors.bg};
   display: flex;
   .Left {
@@ -483,7 +640,7 @@ const Wrapper = styled.section`
       display: flex;
       gap: 1.5rem;
       flex-direction: column;
-      button{
+      button {
         display: flex;
         border-radius: 1.5rem;
         gap: 2rem;
@@ -601,5 +758,30 @@ const Wrapper = styled.section`
     }
   }
 `;
+const BottomBar = styled.div`
+  position: fixed;
+  bottom: 0rem;
+  width: 100%;
+  left: 0;
+  transition: 1s;
+  z-index: 90000000000000000000000000000000000000000;
+  background: #010d31;
+  height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 
+  button {
+    position: relative;
+    text-align: center;
+    border-radius: 100%;
+    padding: 1.4rem 1.5rem;
+    outline: none;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 3rem;
+
+  }
+`;
 export default Library;

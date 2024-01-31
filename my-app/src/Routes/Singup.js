@@ -7,13 +7,16 @@ const Singup = () => {
   const history = useNavigate();
   const [warn, setwran] = useState("");
   const [wtrue, setwtrue] = useState(false);
-  const {PORT} = GlobalContext()
+  const {PORT,setIsVisible} = GlobalContext()
   const [user, setuser] = useState({
     name: "",
     email: "",
     password: "",
   });
   useEffect(() =>{
+    
+    document.querySelector('body').style.maxHeight = "100vh"
+    document.querySelector('html').style.maxHeight = "100vh"
     window.scroll(0,0);
     document.title= 'Signup'
   }, []);
@@ -68,7 +71,10 @@ const Singup = () => {
       </div>
     );
   };
-
+  useEffect(() => {
+    setIsVisible(false)
+    }, [])
+    
   return (
     <Wrapper>
       {wtrue ? Wran() : ""}
@@ -130,8 +136,7 @@ const Wrapper = styled.section`
   position: relative;
   max-height:100vh;
   display: flex;
-  overflow: hidden;
-
+top:7.2rem;  
   align-items: center;
   justify-content: center;
   width: 100%;

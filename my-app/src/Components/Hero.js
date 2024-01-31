@@ -7,10 +7,14 @@ import '../Deco/index.css'
 import { Link, animateScroll as scroll } from "react-scroll";
 
   const scrollToTop = () => {
-  scroll.scrollTo(window.innerHeight+100);};
+    window.scrollTo({
+      top: window.innerHeight + 200,
+      behavior: 'smooth',
+    });
+};
 const Hero = ({Hero_h1_start,h1_span,Hero_h1_end,Hero_para}) => {
 const ScrollTo=()=>{
-  window.scrollTo(0,700)
+  window.scrollTo(0,800)
 }
   return (<Div>
     <HeroStyle  className='Hero-responsive'>
@@ -29,6 +33,7 @@ const ScrollTo=()=>{
        to="#Recent"
        spy={true}
        smooth={true}
+
        offset={-70}
        duration={200}
        onClick={scrollToTop}

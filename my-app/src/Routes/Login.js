@@ -15,7 +15,7 @@ const Login = () => {
   const [email,setemail]=useState('');
   const [password,setpassword]=useState('');
   const {Toogle,setToogle}=useContext(ToogleNav);
-  const {PORT} = GlobalContext()
+  const {PORT,setIsVisible} = GlobalContext()
   useEffect(() =>{
     window.scroll(0,0);
     document.title= 'Login'
@@ -70,7 +70,12 @@ const Login = () => {
       </div>
     );
   };
-  
+  useEffect(() => {
+    document.querySelector('body').style.maxHeight = "100vh"
+    document.querySelector('html').style.maxHeight = "100vh"
+    setIsVisible(false)
+    }, [])
+    
   return (
   
       <Wrapper>
@@ -106,11 +111,12 @@ const Login = () => {
 const Wrapper = styled.section`
   position: relative;
   display: flex;
-
+  top:7.2rem;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 90.5vh;
+  max-height: 100vh;
   background: white;
   .warn {
     z-index: 1;

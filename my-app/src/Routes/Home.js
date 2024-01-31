@@ -46,9 +46,9 @@ const Home = () => {
   }, []);
   return (
   
- <form method='GET'   ref={containerRef}>
+ <form method='GET' ref={containerRef}>
  
-      <Hero  Hero_h1_start="Listening " h1_span="Your"  Hero_h1_end=" Favorite MUSIC" Hero_para="Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus cupiditate dolores placeat eum eius, recusandae."/>
+      <Hero Hero_h1_start="Listening " h1_span="Your"  Hero_h1_end=" Favorite MUSIC" Hero_para="Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus cupiditate dolores placeat eum eius, recusandae."/>
       <Library/>
     
 </form>
