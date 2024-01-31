@@ -558,7 +558,7 @@ const Wrapper = styled.section`
     border-radius: 1.5rem;
     margin: 1rem 0;
 
-    width: 78%;
+    width: 92%;
     height: 97%;
     display: flex;
     flex-direction: column;
