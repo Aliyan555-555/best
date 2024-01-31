@@ -7,6 +7,7 @@ import Login from "./Routes/Login";
 import SingleProduct from "./Routes/SingleProduct";
 import Error from "./Routes/Error";
 import { GlobalStyle } from "./GlobleStyle";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import Logout from "./Routes/Logout";
 import { createContext, useReducer, useState } from "react";
 import { GlobalContext } from "./Context/SongContext";
@@ -50,6 +51,7 @@ const {isVisible,setIsVisible} = GlobalContext()
     
     
     <ThemeProvider theme={theme}>
+      <SpeedInsights/>
       <GlobalStyle />
       <ToogleNav.Provider value={{Toogle,setToogle}}>
       <BrowserRouter>
