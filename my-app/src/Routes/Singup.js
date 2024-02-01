@@ -136,7 +136,7 @@ const Wrapper = styled.section`
   position: relative;
   max-height:100vh;
   display: flex;
-top:7.2rem;  
+top:7.1rem;  
   align-items: center;
   justify-content: center;
   width: 100%;

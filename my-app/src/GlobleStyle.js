@@ -39,7 +39,7 @@ html {
   background: #ff0062; 
 }
 html{
-height: 191vh;
+height: 200vh;
       width: 100vw;
       overflow-x: hidden;
       font-size:50.5%;
@@ -53,7 +53,7 @@ h1{
 
 }
 body{
-      height: 191vh;
+      height: 200vh;
       width: 100vw;
 
       overflow-x: hidden;
