@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import Cookies from "js-cookie";
 import { IoHomeOutline, IoSearchOutline } from "react-icons/io5";
+import { VscAccount } from "react-icons/vsc";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { PiMagnifyingGlassFill } from "react-icons/pi";
@@ -50,6 +51,10 @@ const LeftRender = ({
   setpinlike,
   itemlimet,
 }) => {
+  useEffect(() => {
+    setitemlimet(5.5);
+  }, [])
+  
   if (Toogle) {
     const hendle = () => {};
 
@@ -59,7 +64,7 @@ const LeftRender = ({
       ToogleRef.current.style.width = "92%";
     }
 
-    // setitemlimet(5.5);
+   
 
     return (
       <ToogleMain>
@@ -91,8 +96,6 @@ const LeftRender = ({
           <div className="Toogle-library-header" onClick={p}>
             <svg
               role="img"
-              height="24"
-              width="24"
               aria-hidden="true"
               viewBox="0 0 24 24"
               data-encore-id="icon"
@@ -187,7 +190,8 @@ const LeftRender = ({
 const Library = () => {
   const BottomBarHomeRef = useRef(null);
   const BottomBarSearchRef = useRef(null);
-  const {isVisible,setIsVisible}=GlobalContext()
+  const BottomBarProfileRef = useRef(null);
+  const { isVisible, setIsVisible } = GlobalContext();
   const BottomBarLibraryRef = useRef(null);
   const { Orgplaylist, setNavProfile, NavProfile, playlist } = GlobalContext();
   const ToogleRef = useRef();
@@ -198,15 +202,14 @@ const Library = () => {
   const [itemlimet, setitemlimet] = useState(4.5);
   const scrollToTop = () => {
     window.scrollTo({
-      top:0,
-      behavior: 'smooth',
+      top: 0,
+      behavior: "smooth",
     });
-};
+  };
   const [pinPlaylist, setpinPlaylist] = useState(true);
   const [pinlike, setpinlike] = useState(true);
   const [Profile, setProfile] = useState(false);
   const Render = () => {
-
     if (home && !search && !likeplaylist && !orgplay) {
       return <LibraryHome itemlimet={itemlimet} setitemlimet={setitemlimet} />;
     }
@@ -354,18 +357,17 @@ const Library = () => {
     const section = document.getElementById(`Library`);
     if (section) {
       const rect = section.getBoundingClientRect();
-      setIsVisible(rect.top < window.innerHeight-300 && rect.bottom >=0);
-     
+      setIsVisible(rect.top < window.innerHeight - 300 && rect.bottom >= 0);
     }
   };
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     handleScroll(); // Initial check when component mounts
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
-  })
+  });
   useEffect(() => {
     if (BottomBarHomeRef.current) {
       BottomBarHomeRef.current.style.top = "-3rem";
@@ -375,8 +377,7 @@ const Library = () => {
     }
   }, []);
 
-  const hendleSortSelecteditemBottomBar = (item, unselected1, unselected2) => {
- 
+  const hendleSortSelecteditemBottomBar = (item, unselected1, unselected2,unselected3) => {
     item.current.style.top = "-3rem";
     item.current.style.background = "#ffff";
     item.current.style.color = "#010D31";
@@ -388,21 +389,29 @@ const Library = () => {
     unselected1.current.style.color = "#fff";
     unselected1.current.style.fill = "#fff";
     unselected1.current.style.border = "5px solid #010D31";
-          // Unselected item 2
+    // Unselected item 2
     unselected2.current.style.top = "auto";
     unselected2.current.style.background = "#010D31";
     unselected2.current.style.color = "#fff";
     unselected2.current.style.fill = "#fff";
     unselected2.current.style.border = "5px solid #010D31";
+
+    unselected3.current.style.top = "auto";
+    unselected3.current.style.background = "#010D31";
+    unselected3.current.style.color = "#fff";
+    unselected3.current.style.fill = "#fff";
+    unselected3.current.style.border = "5px solid #010D31";
   };
   const hendleSelectedItemBottomBar = (query) => {
     if (query === "home") {
       if (BottomBarHomeRef.current) {
-        scrollToTop()
+        scrollToTop();
         hendleSortSelecteditemBottomBar(
           BottomBarHomeRef,
           BottomBarSearchRef,
-          BottomBarLibraryRef
+          BottomBarLibraryRef,
+          BottomBarProfileRef,
+
         );
       }
     } else if (query === "search") {
@@ -410,14 +419,29 @@ const Library = () => {
         hendleSortSelecteditemBottomBar(
           BottomBarSearchRef,
           BottomBarHomeRef,
-          BottomBarLibraryRef
+          BottomBarLibraryRef,
+          BottomBarProfileRef,
+
         );
       }
-    } else if (query === "library") {
+    } 
+    else if (query === "library") {
       if (BottomBarLibraryRef.current) {
         hendleSortSelecteditemBottomBar(
           BottomBarLibraryRef,
           BottomBarHomeRef,
+          BottomBarSearchRef,
+          BottomBarProfileRef,
+
+        );
+      }
+    }
+    else if (query === "profile") {
+      if (BottomBarProfileRef.current) {
+        hendleSortSelecteditemBottomBar(
+          BottomBarProfileRef,
+          BottomBarHomeRef,
+          BottomBarLibraryRef,
           BottomBarSearchRef
         );
       }
@@ -481,7 +505,7 @@ const Library = () => {
       {window.innerWidth <= 440 && isVisible ? (
         <BottomBar>
           <button
-            style={{transitionDuration:"0.8s",transitionProperty:'top'}}
+            style={{ transitionDuration: "0.8s", transitionProperty: "top" }}
             onClick={() => hendleSelectedItemBottomBar("home")}
             ref={BottomBarHomeRef}
             type="button"
@@ -489,16 +513,17 @@ const Library = () => {
             <IoHomeOutline />
           </button>
           <button
-            style={{transitionDuration:"0.8s",transitionProperty:'top'}}
+            style={{ transitionDuration: "0.8s", transitionProperty: "top" }}
             onClick={() => hendleSelectedItemBottomBar("search")}
             ref={BottomBarSearchRef}
             type="button"
           >
             <IoSearchOutline />
           </button>
+
           <button
-            style={{transitionDuration:"0.8s",transitionProperty:'top'}}
-            onClick={() => hendleSelectedItemBottomBar("library")}
+            style={{ transitionDuration: "0.8s", transitionProperty: "top" }}
+            onClick={() =>{ hendleSelectedItemBottomBar("library");sethome(false);setsearch(false);setlikeplaylist(false);setorgplay(false);setProfile(true)}}
             ref={BottomBarLibraryRef}
             type="button"
           >
@@ -516,8 +541,18 @@ const Library = () => {
               <path d="M3 22a1 1 0 0 1-1-1V3a1 1 0 0 1 2 0v18a1 1 0 0 1-1 1zM15.5 2.134A1 1 0 0 0 14 3v18a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V6.464a1 1 0 0 0-.5-.866l-6-3.464zM9 2a1 1 0 0 0-1 1v18a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1z"></path>
             </svg>
           </button>
+          <button
+            style={{ transitionDuration: "0.8s", transitionProperty: "top" }}
+            onClick={() => hendleSelectedItemBottomBar("profile")}
+            ref={BottomBarProfileRef}
+            type="button"
+          >
+            <VscAccount />
+          </button>
         </BottomBar>
-      ):""}
+      ) : (
+        ""
+      )}
     </Wrapper>
   );
 };
@@ -582,6 +617,8 @@ const ToogleMain = styled.div`
         background: rgba(255, 255, 255, 0.13);
       }
       svg {
+        width: 24px;
+        height: 24px;
         color: black;
         fill: white;
       }
@@ -703,6 +740,8 @@ const Wrapper = styled.section`
           margin: 0;
         }
         svg {
+          height: 24px;
+          width: 24px;
           cursor: pointer;
           font-size: 3rem;
           fill: ${({ theme }) => theme.colors.text};
@@ -781,7 +820,6 @@ const BottomBar = styled.div`
     background: transparent;
     color: white;
     font-size: 3rem;
-
   }
 `;
 export default Library;
